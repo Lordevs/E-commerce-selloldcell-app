@@ -37,7 +37,7 @@ class Order {
   }
 
   async postCreateOrder(req, res) {
-    let { allProduct, user, amount, transactionId, address, phone } = req.body;
+    let { allProduct, user, amount, transactionId, address, phone, paymentMethod } = req.body;
     if (
       !allProduct ||
       !user ||
@@ -56,13 +56,14 @@ class Order {
           transactionId,
           address,
           phone,
+          paymentMethod: paymentMethod || "Cash on Delivery",
         });
         let save = await newOrder.save();
         if (save) {
           return res.json({ success: "Order created successfully" });
         }
       } catch (err) {
-        return res.json({ error: error });
+        return res.json({ error: err.message || "Error creating order" });
       }
     }
   }

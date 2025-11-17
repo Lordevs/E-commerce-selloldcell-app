@@ -15,82 +15,56 @@ export const fetchData = async (cartListProduct, dispatch) => {
   }
 };
 
-export const fetchbrainTree = async (getBrainTreeToken, setState) => {
-  try {
-    let responseData = await getBrainTreeToken();
-    if (responseData && responseData) {
-      setState({
-        clientToken: responseData.clientToken,
-        success: responseData.success,
-      });
-      console.log(responseData);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const pay = async (
   data,
   dispatch,
   state,
   setState,
-  getPaymentProcess,
   totalCost,
+  calculateDeliveryCharges,
   history
 ) => {
-  console.log(state);
   if (!state.address) {
     setState({ ...state, error: "Please provide your address" });
   } else if (!state.phone) {
     setState({ ...state, error: "Please provide your phone number" });
   } else {
-    let nonce;
-    state.instance
-      .requestPaymentMethod()
-      .then((data) => {
-        dispatch({ type: "loading", payload: true });
-        nonce = data.nonce;
-        let paymentData = {
-          amountTotal: totalCost(),
-          paymentMethod: nonce,
-        };
-        getPaymentProcess(paymentData)
-          .then(async (res) => {
-            if (res) {
-              let orderData = {
-                allProduct: JSON.parse(localStorage.getItem("cart")),
-                user: JSON.parse(localStorage.getItem("jwt")).user._id,
-                amount: res.transaction.amount,
-                transactionId: res.transaction.id,
-                address: state.address,
-                phone: state.phone,
-              };
-              try {
-                let resposeData = await createOrder(orderData);
-                if (resposeData.success) {
-                  localStorage.setItem("cart", JSON.stringify([]));
-                  dispatch({ type: "cartProduct", payload: null });
-                  dispatch({ type: "cartTotalCost", payload: null });
-                  dispatch({ type: "orderSuccess", payload: true });
-                  setState({ clientToken: "", instance: {} });
-                  dispatch({ type: "loading", payload: false });
-                  return history.push("/");
-                } else if (resposeData.error) {
-                  console.log(resposeData.error);
-                }
-              } catch (error) {
-                console.log(error);
-              }
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-        setState({ ...state, error: error.message });
-      });
+    dispatch({ type: "loading", payload: true });
+    
+    const subtotal = totalCost();
+    const deliveryCharges = calculateDeliveryCharges(data.cartProduct);
+    const totalAmount = subtotal + deliveryCharges;
+    
+    // Generate a unique transaction ID for cash on delivery
+    const transactionId = "COD_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9);
+    
+    let orderData = {
+      allProduct: JSON.parse(localStorage.getItem("cart")),
+      user: JSON.parse(localStorage.getItem("jwt")).user._id,
+      amount: totalAmount,
+      transactionId: transactionId,
+      address: state.address,
+      phone: state.phone,
+      paymentMethod: "Cash on Delivery",
+    };
+    
+    try {
+      let responseData = await createOrder(orderData);
+      if (responseData.success) {
+        localStorage.setItem("cart", JSON.stringify([]));
+        dispatch({ type: "cartProduct", payload: null });
+        dispatch({ type: "cartTotalCost", payload: null });
+        dispatch({ type: "orderSuccess", payload: true });
+        dispatch({ type: "loading", payload: false });
+        return history.push("/");
+      } else if (responseData.error) {
+        setState({ ...state, error: responseData.error });
+        dispatch({ type: "loading", payload: false });
+      }
+    } catch (error) {
+      console.log(error);
+      setState({ ...state, error: "Failed to place order. Please try again." });
+      dispatch({ type: "loading", payload: false });
+    }
   }
 };

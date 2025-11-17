@@ -45,6 +45,7 @@ const AllCategory = (props) => {
               <th className="px-4 py-2 border">Status</th>
               <th className="px-4 py-2 border">Total</th>
               <th className="px-4 py-2 border">Delivery Charges</th>
+              <th className="px-4 py-2 border">Payment Method</th>
               <th className="px-4 py-2 border">Transaction Id</th>
               <th className="px-4 py-2 border">Customer</th>
               <th className="px-4 py-2 border">Email</th>
@@ -71,7 +72,7 @@ const AllCategory = (props) => {
             ) : (
               <tr>
                 <td
-                  colSpan="13"
+                  colSpan="14"
                   className="text-xl text-center font-semibold py-8"
                 >
                   No order found
@@ -158,6 +159,11 @@ const CategoryTable = ({ order, editOrder }) => {
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
           ${totalDeliveryCharges.toFixed(2)}
+        </td>
+        <td className="hover:bg-gray-200 p-2 text-center">
+          <span className="bg-blue-200 rounded-full text-center text-xs px-2 font-semibold">
+            {order.paymentMethod || "Cash on Delivery"}
+          </span>
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
           {order.transactionId}

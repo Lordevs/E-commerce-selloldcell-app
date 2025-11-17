@@ -28,3 +28,18 @@ export const totalCost = () => {
   });
   return totalCost;
 };
+
+export const calculateDeliveryCharges = (products) => {
+  if (!products || products.length === 0) return 0;
+  let totalDeliveryCharges = 0;
+  let carts = JSON.parse(localStorage.getItem("cart"));
+  
+  products.forEach((product) => {
+    const cartItem = carts.find((item) => item.id === product._id);
+    if (cartItem && product.pDeliveryCharges) {
+      totalDeliveryCharges += product.pDeliveryCharges * cartItem.quantitiy;
+    }
+  });
+  
+  return totalDeliveryCharges;
+};

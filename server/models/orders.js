@@ -41,6 +41,10 @@ const orderSchema = new mongoose.Schema(
         "Cancelled",
       ],
     },
+    paymentMethod: {
+      type: String,
+      default: "Cash on Delivery",
+    },
   },
   { timestamps: true }
 );
