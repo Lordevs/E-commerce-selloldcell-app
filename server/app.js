@@ -53,6 +53,7 @@ mongoose
   )
   .catch((err) => console.log("Database Not Connected !!!"));
 
+
 // Middleware
 app.use(morgan("dev"));
 app.use(cookieParser());

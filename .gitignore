@@ -3,3 +3,7 @@ uploads
 images
 package-lock.json
 img
+.env
+.env.local
+server/.env
+client/.env
