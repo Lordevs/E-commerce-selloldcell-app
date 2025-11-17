@@ -24,6 +24,7 @@ const EditProductModal = (props) => {
     pQuantity: "",
     pPrice: "",
     pOffer: "",
+    pDeliveryCharges: "",
     error: false,
     success: false,
   });
@@ -46,10 +47,13 @@ const EditProductModal = (props) => {
       pDescription: data.editProductModal.pDescription,
       pImages: data.editProductModal.pImages,
       pStatus: data.editProductModal.pStatus,
-      pCategory: data.editProductModal.pCategory,
+      pCategory: typeof data.editProductModal.pCategory === 'object' && data.editProductModal.pCategory._id 
+        ? data.editProductModal.pCategory._id 
+        : data.editProductModal.pCategory,
       pQuantity: data.editProductModal.pQuantity,
       pPrice: data.editProductModal.pPrice,
       pOffer: data.editProductModal.pOffer,
+      pDeliveryCharges: data.editProductModal.pDeliveryCharges || 0,
     });
   }, [data.editProductModal]);
 
@@ -265,6 +269,9 @@ const EditProductModal = (props) => {
               <div className="w-1/2 flex flex-col space-y-1">
                 <label htmlFor="status">Product Category *</label>
                 <select
+                  value={typeof editformData.pCategory === 'object' && editformData.pCategory._id 
+                    ? editformData.pCategory._id 
+                    : editformData.pCategory || ""}
                   onChange={(e) =>
                     setEditformdata({
                       ...editformData,
@@ -283,27 +290,13 @@ const EditProductModal = (props) => {
                   {categories && categories.length > 0
                     ? categories.map((elem) => {
                         return (
-                          <Fragment key={elem._id}>
-                            {editformData.pCategory._id &&
-                            editformData.pCategory._id === elem._id ? (
-                              <option
-                                name="status"
-                                value={elem._id}
-                                key={elem._id}
-                                selected
-                              >
-                                {elem.cName}
-                              </option>
-                            ) : (
-                              <option
-                                name="status"
-                                value={elem._id}
-                                key={elem._id}
-                              >
-                                {elem.cName}
-                              </option>
-                            )}
-                          </Fragment>
+                          <option
+                            name="status"
+                            value={elem._id}
+                            key={elem._id}
+                          >
+                            {elem.cName}
+                          </option>
                         );
                       })
                     : ""}
@@ -343,6 +336,28 @@ const EditProductModal = (props) => {
                   type="number"
                   className="px-4 py-2 border focus:outline-none"
                   id="offer"
+                />
+              </div>
+            </div>
+            <div className="flex space-x-1 py-4">
+              <div className="w-full flex flex-col space-y-1">
+                <label htmlFor="deliveryCharges">Delivery Charges *</label>
+                <input
+                  value={editformData.pDeliveryCharges}
+                  onChange={(e) =>
+                    setEditformdata({
+                      ...editformData,
+                      error: false,
+                      success: false,
+                      pDeliveryCharges: e.target.value,
+                    })
+                  }
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  className="px-4 py-2 border focus:outline-none"
+                  id="deliveryCharges"
+                  placeholder="Enter delivery charges"
                 />
               </div>
             </div>

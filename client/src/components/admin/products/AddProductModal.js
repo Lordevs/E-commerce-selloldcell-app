@@ -19,6 +19,7 @@ const AddProductDetail = ({ categories }) => {
     pPrice: "",
     pOffer: 0,
     pQuantity: "",
+    pDeliveryCharges: 0,
     success: false,
     error: false,
   });
@@ -60,6 +61,7 @@ const AddProductDetail = ({ categories }) => {
           pPrice: "",
           pQuantity: "",
           pOffer: 0,
+          pDeliveryCharges: 0,
           success: responseData.success,
           error: false,
         });
@@ -74,6 +76,7 @@ const AddProductDetail = ({ categories }) => {
             pPrice: "",
             pQuantity: "",
             pOffer: 0,
+            pDeliveryCharges: 0,
             success: false,
             error: false,
           });
@@ -302,6 +305,28 @@ const AddProductDetail = ({ categories }) => {
                   type="number"
                   className="px-4 py-2 border focus:outline-none"
                   id="offer"
+                />
+              </div>
+            </div>
+            <div className="flex space-x-1 py-4">
+              <div className="w-full flex flex-col space-y-1">
+                <label htmlFor="deliveryCharges">Delivery Charges *</label>
+                <input
+                  value={fData.pDeliveryCharges}
+                  onChange={(e) =>
+                    setFdata({
+                      ...fData,
+                      error: false,
+                      success: false,
+                      pDeliveryCharges: e.target.value,
+                    })
+                  }
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  className="px-4 py-2 border focus:outline-none"
+                  id="deliveryCharges"
+                  placeholder="Enter delivery charges"
                 />
               </div>
             </div>

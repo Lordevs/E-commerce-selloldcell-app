@@ -44,6 +44,7 @@ const AllCategory = (props) => {
               <th className="px-4 py-2 border">Products</th>
               <th className="px-4 py-2 border">Status</th>
               <th className="px-4 py-2 border">Total</th>
+              <th className="px-4 py-2 border">Delivery Charges</th>
               <th className="px-4 py-2 border">Transaction Id</th>
               <th className="px-4 py-2 border">Customer</th>
               <th className="px-4 py-2 border">Email</th>
@@ -70,7 +71,7 @@ const AllCategory = (props) => {
             ) : (
               <tr>
                 <td
-                  colSpan="12"
+                  colSpan="13"
                   className="text-xl text-center font-semibold py-8"
                 >
                   No order found
@@ -90,6 +91,22 @@ const AllCategory = (props) => {
 /* Single Category Component */
 const CategoryTable = ({ order, editOrder }) => {
   const { dispatch } = useContext(OrderContext);
+
+  // Calculate total delivery charges
+  const calculateDeliveryCharges = () => {
+    if (!order.allProduct || order.allProduct.length === 0) return 0;
+    let totalDeliveryCharges = 0;
+    order.allProduct.forEach((product) => {
+      if (product.id) {
+        const deliveryCharges = product.id.pDeliveryCharges || 0;
+        const quantity = product.quantitiy || 1;
+        totalDeliveryCharges += deliveryCharges * quantity;
+      }
+    });
+    return totalDeliveryCharges;
+  };
+
+  const totalDeliveryCharges = calculateDeliveryCharges();
 
   return (
     <Fragment>
@@ -138,6 +155,9 @@ const CategoryTable = ({ order, editOrder }) => {
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
           ${order.amount}.00
+        </td>
+        <td className="hover:bg-gray-200 p-2 text-center">
+          ${totalDeliveryCharges.toFixed(2)}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
           {order.transactionId}

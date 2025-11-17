@@ -1,0 +1,21 @@
+{
+  "name": "mern-stack-ecommerce-hayroo",
+  "version": "1.0.0",
+  "description": "MERN Stack E-commerce Project - Hayroo",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "install:client": "cd client && npm install",
+    "install:server": "cd server && npm install",
+    "install:all": "npm run install:client && npm run install:server",
+    "start:client": "cd client && npm start",
+    "start:server": "cd server && npm run start:dev",
+    "build:client": "cd client && npm run build"
+  },
+  "author": "Hasan | https://hasan-py.github.io",
+  "license": "ISC"
+}
+

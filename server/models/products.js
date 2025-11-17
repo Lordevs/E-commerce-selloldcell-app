@@ -35,6 +35,10 @@ const productSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    pDeliveryCharges: {
+      type: Number,
+      default: 0,
+    },
     pRatingsReviews: [
       {
         review: String,
