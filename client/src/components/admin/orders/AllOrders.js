@@ -4,9 +4,9 @@ import moment from "moment";
 import { OrderContext } from "./index";
 import { fetchData, editOrderReq, deleteOrderReq } from "./Actions";
 
-const apiURL = process.env.REACT_APP_API_URL;
+const apiURL = (typeof process !== 'undefined' && process.env && process.env.REACT_APP_API_URL) || 'http://localhost:8000';
 
-const AllCategory = (props) => {
+const AllOrders = (props) => {
   const { data, dispatch } = useContext(OrderContext);
   const { orders, loading } = data;
 
@@ -60,7 +60,7 @@ const AllCategory = (props) => {
             {orders && orders.length > 0 ? (
               orders.map((item, i) => {
                 return (
-                  <CategoryTable
+                  <OrderTable
                     key={i}
                     order={item}
                     editOrder={(oId, type, status) =>
@@ -89,8 +89,8 @@ const AllCategory = (props) => {
   );
 };
 
-/* Single Category Component */
-const CategoryTable = ({ order, editOrder }) => {
+/* Single Order Component */
+const OrderTable = ({ order, editOrder }) => {
   const { dispatch } = useContext(OrderContext);
 
   // Calculate total delivery charges
@@ -98,7 +98,7 @@ const CategoryTable = ({ order, editOrder }) => {
     if (!order.allProduct || order.allProduct.length === 0) return 0;
     let totalDeliveryCharges = 0;
     order.allProduct.forEach((product) => {
-      if (product.id) {
+      if (product && product.id) {
         const deliveryCharges = product.id.pDeliveryCharges || 0;
         const quantity = product.quantitiy || 1;
         totalDeliveryCharges += deliveryCharges * quantity;
@@ -113,19 +113,24 @@ const CategoryTable = ({ order, editOrder }) => {
     <Fragment>
       <tr className="border-b">
         <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
-          {order.allProduct.map((product, i) => {
-            return (
-              <span className="block flex items-center space-x-2" key={i}>
-                <img
-                  className="w-8 h-8 object-cover object-center"
-                  src={`${apiURL}/uploads/products/${product.id.pImages[0]}`}
-                  alt="productImage"
-                />
-                <span>{product.id.pName}</span>
-                <span>{product.quantitiy}x</span>
-              </span>
-            );
-          })}
+          {order.allProduct && order.allProduct.length > 0 ? (
+            order.allProduct.map((product, i) => {
+              if (!product.id) return null;
+              return (
+                <span className="block flex items-center space-x-2" key={i}>
+                  <img
+                    className="w-8 h-8 object-cover object-center"
+                    src={`${apiURL}/uploads/products/${product.id.pImages?.[0] || "default.jpg"}`}
+                    alt="productImage"
+                  />
+                  <span>{product.id.pName || "N/A"}</span>
+                  <span>{product.quantitiy || 0}x</span>
+                </span>
+              );
+            })
+          ) : (
+            <span>No products</span>
+          )}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center cursor-default">
           {order.status === "Not processed" && (
@@ -155,7 +160,7 @@ const CategoryTable = ({ order, editOrder }) => {
           )}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
-          ${order.amount}.00
+          ${order.amount || 0}.00
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
           ${totalDeliveryCharges.toFixed(2)}
@@ -166,19 +171,21 @@ const CategoryTable = ({ order, editOrder }) => {
           </span>
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
-          {order.transactionId}
-        </td>
-        <td className="hover:bg-gray-200 p-2 text-center">{order.user.name}</td>
-        <td className="hover:bg-gray-200 p-2 text-center">
-          {order.user.email}
-        </td>
-        <td className="hover:bg-gray-200 p-2 text-center">{order.phone}</td>
-        <td className="hover:bg-gray-200 p-2 text-center">{order.address}</td>
-        <td className="hover:bg-gray-200 p-2 text-center">
-          {moment(order.createdAt).format("lll")}
+          {order.transactionId || "N/A"}
         </td>
         <td className="hover:bg-gray-200 p-2 text-center">
-          {moment(order.updatedAt).format("lll")}
+          {order.user?.name || "N/A"}
+        </td>
+        <td className="hover:bg-gray-200 p-2 text-center">
+          {order.user?.email || "N/A"}
+        </td>
+        <td className="hover:bg-gray-200 p-2 text-center">{order.phone || "N/A"}</td>
+        <td className="hover:bg-gray-200 p-2 text-center">{order.address || "N/A"}</td>
+        <td className="hover:bg-gray-200 p-2 text-center">
+          {order.createdAt ? moment(order.createdAt).format("lll") : "N/A"}
+        </td>
+        <td className="hover:bg-gray-200 p-2 text-center">
+          {order.updatedAt ? moment(order.updatedAt).format("lll") : "N/A"}
         </td>
         <td className="p-2 flex items-center justify-center">
           <span
@@ -224,4 +231,4 @@ const CategoryTable = ({ order, editOrder }) => {
   );
 };
 
-export default AllCategory;
+export default AllOrders;

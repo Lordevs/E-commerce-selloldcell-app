@@ -116,9 +116,11 @@ const EditProductModal = (props) => {
       <div
         className={`${
           data.editProductModal.modal ? "" : "hidden"
-        } fixed inset-0 flex items-center z-30 justify-center overflow-auto`}
+        } fixed inset-0 z-30 overflow-y-auto`}
+        style={{ paddingTop: '1rem', paddingBottom: '1rem' }}
       >
-        <div className="mt-32 md:mt-0 relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4 px-4 py-4 md:px-8">
+        <div className="min-h-full flex items-start md:items-center justify-center px-4">
+          <div className="relative bg-white w-11/12 md:w-2/3 lg:w-1/2 xl:w-2/5 max-w-2xl shadow-lg flex flex-col items-center space-y-4 px-4 py-4 md:px-8 my-4 md:my-8">
           <div className="flex items-center justify-between w-full pt-4">
             <span className="text-left font-semibold text-2xl tracking-wider">
               Edit Product
@@ -371,6 +373,7 @@ const EditProductModal = (props) => {
               </button>
             </div>
           </form>
+          </div>
         </div>
       </div>
     </Fragment>

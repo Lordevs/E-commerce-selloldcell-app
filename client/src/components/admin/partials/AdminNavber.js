@@ -24,7 +24,7 @@ const AdminNavber = (props) => {
             style={{ letterSpacing: "0.70rem" }}
             className="font-bold uppercase text-gray-800 text-2xl cursor-pointer text-center"
           >
-            Hayroo
+            Fragrance Island
           </span>
         </div>
         {/* Small Screen Show */}
@@ -34,7 +34,7 @@ const AdminNavber = (props) => {
             style={{ letterSpacing: "0.10rem" }}
             className="font-bold uppercase text-gray-800 text-2xl cursor-pointer"
           >
-            Hayroo
+            Fragrance Island
           </span>
         </div>
         {/* Both Screen show */}

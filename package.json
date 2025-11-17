@@ -1,7 +1,7 @@
 {
-  "name": "mern-stack-ecommerce-hayroo",
+  "name": "fragrance-island",
   "version": "1.0.0",
-  "description": "MERN Stack E-commerce Project - Hayroo",
+  "description": "Fragrance Island - A E-commerce website",
   "private": true,
   "workspaces": [
     "client",

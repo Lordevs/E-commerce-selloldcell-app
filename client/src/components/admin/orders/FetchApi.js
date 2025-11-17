@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiURL = process.env.REACT_APP_API_URL;
+const apiURL = (typeof process !== 'undefined' && process.env && process.env.REACT_APP_API_URL) || 'http://localhost:8000';
 
 export const getAllOrder = async () => {
   try {
