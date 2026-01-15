@@ -30,7 +30,7 @@ const CategoryList = () => {
   return (
     <div className={`${data.categoryListDropdown ? "" : "hidden"} my-4`}>
       <hr />
-      <div className="py-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="py-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {categories && categories.length > 0 ? (
           categories.map((item, index) => {
             return (
@@ -39,10 +39,11 @@ const CategoryList = () => {
                   onClick={(e) =>
                     history.push(`/products/category/${item._id}`)
                   }
-                  className="col-span-1 m-2 flex flex-col items-center justify-center space-y-2 cursor-pointer"
+                  className="col-span-1 m-2 flex flex-col items-center justify-center space-y-2 cursor-pointer w-41 h-41"
                 >
                   <img
                     src={`${apiURL}/uploads/categories/${item.cImage}`}
+                    className="w-full h-full object-cover"
                     alt="pic"
                   />
                   <div className="font-medium">{item.cName}</div>
@@ -190,7 +191,7 @@ const Search = () => {
       <input
         value={search}
         onChange={(e) => searchHandle(e)}
-        className="px-4 text-xl py-4 focus:outline-none"
+        className="px-4 text-xl py-4 focus:outline-none rounded-full w-full border-2 border-gray-500"
         type="text"
         placeholder="Search products..."
       />

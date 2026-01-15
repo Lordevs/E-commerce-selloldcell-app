@@ -128,12 +128,14 @@ const ProductDetailsSection = (props) => {
             />
           </div>
           <div className="col-span-2 md:col-span-7">
-            <div className="relative">
+            <div className="relative w-full max-w-[250px] aspect-square  overflow-hidden rounded-lg">
               <img
-                className="w-full"
-                src={`${apiURL}/uploads/products/${sProduct.pImages[count]}`}
-                alt="Pic"
+              onClick={() => slideImage("increase", 0, count, setCount, pImages)}
+              className={`${count === 0 ? "" : "opacity-100"} cursor-pointer mx-auto w-48 h-full object-cover object-center rounded-md`}
+              src={`${apiURL}/uploads/products/${sProduct.pImages[count]}`}
+              alt="thumbnail"
               />
+
               <div className="absolute inset-0 flex justify-between items-center mb-4">
                 <svg
                   onClick={(e) =>
