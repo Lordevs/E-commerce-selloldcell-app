@@ -8,9 +8,9 @@ const customizeModel = require("../models/customize");
 class Customize {
   async getImages(req, res) {
     try {
-      let Images = await customizeModel.find({});
+      let Images = await customizeModel.find({}).sort({ createdAt: -1 });
       if (Images) {
-        return res.json({ Images });
+        return res.json(Images);
       }
     } catch (err) {
       console.log(err);

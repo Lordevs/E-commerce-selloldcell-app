@@ -33,14 +33,14 @@ const Navber = () => {
               style={{ letterSpacing: "0.10rem" }}
               className="lg:hidden font-bold uppercase text-gray-800 text-2xl cursor-pointer"
             >
-              Fragrance Island
+              Fragrance Iland
             </span>
             <span
               onClick={(e) => history.push("/")}
               style={{ letterSpacing: "0.70rem" }}
               className="hidden lg:block font-bold uppercase text-gray-800 text-2xl cursor-pointer tracking-widest"
             >
-              Fragrance Island
+              Fragrance Iland
             </span>
           </div>
           <div className="hidden lg:block col-span-1"></div>

@@ -48,7 +48,24 @@ const UploadImageSection = () => {
   const { data, dispatch } = useContext(DashboardContext);
 
   const uploadImageHandler = (image) => {
-    uploadImage(image, dispatch);
+    if (!image) return;
+    
+    // Check if aspect ratio is 2000x800 (Ratio: 2.5) with small tolerance
+    const img = new Image();
+    img.src = URL.createObjectURL(image);
+    img.onload = () => {
+      const width = img.width;
+      const height = img.height;
+      const ratio = width / height;
+      
+      // Allow ratio 2.5 (2000/800) with +/- 0.05 tolerance
+      if (ratio >= 2.45 && ratio <= 2.55) {
+        uploadImage(image, dispatch);
+      } else {
+        alert("Image must be approximately 2000x800 resolution (Aspect Ratio 2.5:1)");
+      }
+      URL.revokeObjectURL(img.src);
+    };
   };
 
   return (

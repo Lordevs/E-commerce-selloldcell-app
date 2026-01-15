@@ -23,8 +23,11 @@ export const todayAllOrders = async (dispatch) => {
 export const sliderImages = async (dispatch) => {
   try {
     let responseData = await getSliderImages();
-    if (responseData && responseData.Images) {
-      dispatch({ type: "sliderImages", payload: responseData.Images });
+    if (responseData) {
+      dispatch({ 
+        type: "sliderImages", 
+        payload: Array.isArray(responseData) ? responseData : responseData.Images 
+      });
     }
   } catch (error) {
     console.log(error);

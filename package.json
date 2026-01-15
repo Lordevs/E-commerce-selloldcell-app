@@ -1,7 +1,7 @@
 {
   "name": "fragrance-island",
   "version": "1.0.0",
-  "description": "Fragrance Island - A E-commerce website",
+  "description": "Fragrance Iland - A E-commerce website",
   "private": true,
   "workspaces": [
     "client",
@@ -18,4 +18,3 @@
   "author": "Hasan | https://hasan-py.github.io",
   "license": "ISC"
 }
-

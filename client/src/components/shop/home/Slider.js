@@ -15,12 +15,21 @@ const Slider = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (data?.sliderImages?.length > 0) {
+        nextSlide(data.sliderImages.length, slide, setSlide);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [data.sliderImages, slide]);
+
   return (
     <Fragment>
-      <div className="relative mt-16 bg-gray-100 border-2">
+      <div className="relative mt-16 h-[300px] bg-gray-100 border-2">
         {data.sliderImages.length > 0 ? (
           <img
-            className="w-full"
+            className="w-full h-full object-cover"
             src={`${apiURL}/uploads/customize/${data.sliderImages[slide].slideImage}`}
             alt="sliderImage"
           />
@@ -34,7 +43,7 @@ const Slider = () => {
               onClick={(e) =>
                 prevSlide(data.sliderImages.length, slide, setSlide)
               }
-              className={`z-10 absolute top-0 left-0 mt-64 flex justify-end items-center box-border flex justify-center w-12 h-12 text-gray-700  cursor-pointer hover:text-yellow-700`}
+              className={`z-10 absolute top-0 left-0 mt-64 flex justify-end items-center box-border flex justify-center w-12 h-12 text-gray-700 cursor-pointer hover:text-yellow-700`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
