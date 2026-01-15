@@ -154,14 +154,14 @@ const ProductTable = ({ product, deleteProduct, editProduct }) => {
             </span>
           )}
         </td>
-        <td className="p-2 text-center">{product.pQuantity}</td>
-        <td className="p-2 text-center">{product.pCategory ? product.pCategory.cName : "-"}</td>
-        <td className="p-2 text-center">{product.pOffer}</td>
+        <td className="p-2 text-center">{product?.pQuantity}</td>
+        <td className="p-2 text-center">{product?.pCategory?.cName}</td>
+        <td className="p-2 text-center">{product?.pOffer}</td>
         <td className="p-2 text-center">
-          {moment(product.createdAt).format("lll")}
+          {moment(product?.createdAt).format("lll")}
         </td>
         <td className="p-2 text-center">
-          {moment(product.updatedAt).format("lll")}
+          {moment(product?.updatedAt).format("lll")}W
         </td>
         <td className="p-2 flex items-center justify-center">
           <span
