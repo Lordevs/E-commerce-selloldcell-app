@@ -28,20 +28,12 @@ const Navber = () => {
       <nav className="fixed top-0 w-full z-20 shadow-lg lg:shadow-none bg-white">
         <div className="m-4 md:mx-12 md:my-6 grid grid-cols-4 lg:grid-cols-3">
           <div className="col-span-2 lg:col-span-1 flex items-center">
-            <span
+            <img
               onClick={(e) => history.push("/")}
-              style={{ letterSpacing: "0.10rem" }}
-              className="lg:hidden font-bold uppercase text-gray-800 text-2xl cursor-pointer"
-            >
-              Fragrance Iland
-            </span>
-            <span
-              onClick={(e) => history.push("/")}
-              style={{ letterSpacing: "0.70rem" }}
-              className="hidden lg:block font-bold uppercase text-gray-800 text-2xl cursor-pointer tracking-widest"
-            >
-              Fragrance Iland
-            </span>
+              src={`${process.env.PUBLIC_URL}/logo.png`}
+              alt="Fragrance Island Logo"
+              className="cursor-pointer object-contain h-12" // Adjusted height for better visibility
+            />
           </div>
           <div className="hidden lg:block col-span-1"></div>
           <div className="flex items-right col-span-2 lg:col-span-1 flex justify-end">

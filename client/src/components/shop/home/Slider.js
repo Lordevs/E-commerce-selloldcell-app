@@ -26,13 +26,21 @@ const Slider = () => {
 
   return (
     <Fragment>
-      <div className="relative mt-16 h-[300px] bg-gray-100 border-2">
+      <div className="relative mt-16 bg-gray-100 border-2 overflow-hidden">
         {data.sliderImages.length > 0 ? (
-          <img
-            className="w-full h-full object-cover"
-            src={`${apiURL}/uploads/customize/${data.sliderImages[slide].slideImage}`}
-            alt="sliderImage"
-          />
+          <div 
+            className="w-full h-full flex transition-transform duration-700 ease-in-out"
+            style={{ transform: `translateX(-${slide * 100}%)` }}
+          >
+            {data.sliderImages.map((item, index) => (
+              <img
+                key={index}
+                className="w-full h-[300px] object-cover flex-shrink-0"
+                src={`${apiURL}/uploads/customize/${item.slideImage}`}
+                alt="sliderImage"
+              />
+            ))}
+          </div>
         ) : (
           ""
         )}
@@ -43,7 +51,7 @@ const Slider = () => {
               onClick={(e) =>
                 prevSlide(data.sliderImages.length, slide, setSlide)
               }
-              className={`z-10 absolute top-0 left-0 mt-64 flex justify-end items-center box-border flex justify-center w-12 h-12 text-gray-700 cursor-pointer hover:text-yellow-700`}
+              className={`z-10 absolute top-0 left-0 mt-64 flex justify-end items-center box-border flex justify-center w-12 h-12 text-white cursor-pointer hover:text-yellow-700`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -60,7 +68,7 @@ const Slider = () => {
               onClick={(e) =>
                 nextSlide(data.sliderImages.length, slide, setSlide)
               }
-              className={`z-10 absolute top-0 right-0 mt-64 flex justify-start items-center box-border flex justify-center w-12 h-12 text-gray-700 cursor-pointer hover:text-yellow-700`}
+              className={`z-10 absolute top-0 right-0 mt-64 flex justify-start items-center box-border flex justify-center w-12 h-12 text-white cursor-pointer hover:text-yellow-700`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
