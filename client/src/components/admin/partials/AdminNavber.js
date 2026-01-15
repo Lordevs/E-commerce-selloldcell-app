@@ -18,24 +18,22 @@ const AdminNavber = (props) => {
         <div className="hidden lg:block w-1/3"></div>
             
         {/*  Large Screen Show - Centered */}
-        <div className="hidden lg:flex lg:justify-center lg:items-center lg:w-1/3">
-          <span
+        <div className="hidden lg:flex lg:justify-center lg:items-center lg:w-full">
+          <img
             onClick={(e) => history.push("/admin/dashboard")}
-            style={{ letterSpacing: "0.70rem" }}
-            className="font-bold uppercase text-gray-800 text-2xl cursor-pointer text-center"
-          >
-            Fragrance Iland
-          </span>
+            src={`${process.env.PUBLIC_URL}/logo.png`}
+            alt="Fragrance Iland Logo"
+            className="cursor-pointer object-contain lg:h-12"
+          />
         </div>
         {/* Small Screen Show */}
         <div className="lg:hidden flex items-center">
-          <span
+          <img
             onClick={(e) => history.push("/admin/dashboard")}
-            style={{ letterSpacing: "0.10rem" }}
-            className="font-bold uppercase text-gray-800 text-2xl cursor-pointer"
-          >
-            Fragrance Iland
-          </span>
+            src={`${process.env.PUBLIC_URL}/logo.png`}
+            alt="Fragrance Iland Logo"
+            className="cursor-pointer object-contain h-10"
+          />
         </div>
         {/* Both Screen show */}
         <div className="flex items-center lg:w-1/3 lg:justify-end">
