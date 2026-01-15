@@ -26,7 +26,7 @@ const SearchFilter = (props) => {
           />
           <input
             style={{ background: "#303031" }}
-            className="py-2 px-4 focus:outline-none rounded-r cursor-pointer capitalize  text-gray-100"
+            className="py-2 px-4 focus:outline-none rounded-r cursor-pointer capitalize border-2 border-gray-500  text-gray-100"
             type="submit"
             defaultValue="search"
           />
