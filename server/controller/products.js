@@ -42,8 +42,18 @@ class Product {
   }
 
   async postAddProduct(req, res) {
-    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus, pDeliveryCharges } =
-      req.body;
+    let {
+      pName,
+      pDescription,
+      pPrice,
+      pQuantity,
+      pCategory,
+      pOffer,
+      pStatus,
+      pDeliveryCharges,
+      pSize,
+      pProperty,
+    } = req.body;
     let images = req.files;
     // Validation
     if (
@@ -53,7 +63,9 @@ class Product {
       !pQuantity |
       !pCategory |
       !pOffer |
-      !pStatus
+      !pStatus |
+      !pSize |
+      !pProperty
     ) {
       Product.deleteImages(images, "file");
       return res.json({ error: "All filled must be required" });
@@ -66,9 +78,9 @@ class Product {
       });
     }
     // Validate Images
-    else if (images.length !== 2) {
+    else if (!images || images.length < 1) {
       Product.deleteImages(images, "file");
-      return res.json({ error: "Must need to provide 2 images" });
+      return res.json({ error: "Must need to provide at least 1 image" });
     } else {
       try {
         let allImages = [];
@@ -84,6 +96,8 @@ class Product {
           pCategory,
           pOffer,
           pStatus,
+          pSize,
+          pProperty,
           pDeliveryCharges: pDeliveryCharges || 0,
         });
         let save = await newProduct.save();
@@ -108,6 +122,8 @@ class Product {
       pStatus,
       pImages,
       pDeliveryCharges,
+      pSize,
+      pProperty,
     } = req.body;
     let editImages = req.files;
 
@@ -120,7 +136,9 @@ class Product {
       !pQuantity |
       !pCategory |
       !pOffer |
-      !pStatus
+      !pStatus |
+      !pSize |
+      !pProperty
     ) {
       return res.json({ error: "All filled must be required" });
     }
@@ -131,9 +149,9 @@ class Product {
       });
     }
     // Validate Update Images
-    else if (editImages && editImages.length == 1) {
+    else if (editImages && editImages.length < 1 && !pImages) {
       Product.deleteImages(editImages, "file");
-      return res.json({ error: "Must need to provide 2 images" });
+      return res.json({ error: "Must need to provide at least 1 image" });
     } else {
       let editData = {
         pName,
@@ -143,9 +161,11 @@ class Product {
         pCategory,
         pOffer,
         pStatus,
+        pSize,
+        pProperty,
         pDeliveryCharges: pDeliveryCharges || 0,
       };
-      if (editImages.length == 2) {
+      if (editImages && editImages.length > 0) {
         let allEditImages = [];
         for (const img of editImages) {
           allEditImages.push(img.filename);

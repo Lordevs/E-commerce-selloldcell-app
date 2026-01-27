@@ -30,3 +30,12 @@ export const createOrder = async (orderData) => {
     console.log(error);
   }
 };
+
+export const getSettings = async () => {
+  try {
+    let res = await axios.get(`${apiURL}/api/settings/get-settings`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

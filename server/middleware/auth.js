@@ -5,12 +5,14 @@ const userModel = require("../models/users");
 exports.loginCheck = (req, res, next) => {
   try {
     let token = req.headers.token;
+    if (!token) return res.status(401).json({ error: "Access denied. No token provided." });
+
     token = token.replace("Bearer ", "");
-    decode = jwt.verify(token, JWT_SECRET);
+    const decode = jwt.verify(token, JWT_SECRET);
     req.userDetails = decode;
     next();
   } catch (err) {
-    res.json({
+    res.status(401).json({
       error: "You must be logged in",
     });
   }
@@ -30,13 +32,13 @@ exports.isAuth = (req, res, next) => {
 
 exports.isAdmin = async (req, res, next) => {
   try {
-    let reqUser = await userModel.findById(req.body.loggedInUserId);
-    // If user role 0 that's mean not admin it's customer
-    if (reqUser.userRole === 0) {
+    // req.userDetails is set by loginCheck middleware
+    if (req.userDetails && (req.userDetails.role === 1 || req.userDetails.userRole === 1)) {
+      next();
+    } else {
       res.status(403).json({ error: "Access denied" });
     }
-    next();
-  } catch {
-    res.status(404);
+  } catch (err) {
+    res.status(500).json({ error: "Internal server error" });
   }
 };

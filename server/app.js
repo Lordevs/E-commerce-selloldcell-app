@@ -32,6 +32,7 @@ const productRouter = require("./routes/products");
 const orderRouter = require("./routes/orders");
 const usersRouter = require("./routes/users");
 const customizeRouter = require("./routes/customize");
+const settingsRouter = require("./routes/settings");
 // Import Auth middleware for check user login or not~
 const { loginCheck } = require("./middleware/auth");
 const CreateAllFolder = require("./config/uploadFolderCreateScript");
@@ -70,6 +71,7 @@ app.use("/api/product", productRouter);
 // app.use("/api", brainTreeRouter); // Removed - using Cash on Delivery only
 app.use("/api/order", orderRouter);
 app.use("/api/customize", customizeRouter);
+app.use("/api/settings", settingsRouter);
 
 // Run Server
 const PORT = process.env.PORT || 8000;

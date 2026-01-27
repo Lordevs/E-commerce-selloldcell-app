@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { LayoutContext } from "../layout";
-import { subTotal, quantity, totalCost, calculateDeliveryCharges } from "../partials/Mixins";
+import { subTotal, quantity, totalCost, calculateDeliveryCharges, calculateTaxes } from "../partials/Mixins";
 
 import { cartListProduct } from "../partials/FetchApi";
 import { fetchData, pay } from "./Action";
@@ -11,6 +11,7 @@ const apiURL = process.env.REACT_APP_API_URL;
 export const CheckoutComponent = (props) => {
   const history = useHistory();
   const { data, dispatch } = useContext(LayoutContext);
+  const [settings, setSettings] = useState(null);
 
   const [state, setState] = useState({
     address: "",
@@ -21,8 +22,23 @@ export const CheckoutComponent = (props) => {
 
   useEffect(() => {
     fetchData(cartListProduct, dispatch);
+    fetchSettings();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const fetchSettings = async () => {
+    const { getSettings } = await import("./FetchApi");
+    const response = await getSettings();
+    if (response && response.settings) {
+      setSettings(response.settings);
+    }
+  };
+
+  const subTotalAmount = totalCost();
+  const deliveryCharges = calculateDeliveryCharges(data.cartProduct, settings);
+  const taxes = calculateTaxes(subTotalAmount, settings);
+  const taxTotal = taxes.reduce((acc, tax) => acc + tax.amount, 0);
+  const finalTotal = subTotalAmount + deliveryCharges + taxTotal;
 
   if (data.loading) {
     return (
@@ -71,7 +87,7 @@ export const CheckoutComponent = (props) => {
                   <label htmlFor="address" className="pb-2">
                     Delivery Address
                   </label>
-                  <input
+                  <textarea
                     value={state.address}
                     onChange={(e) =>
                       setState({
@@ -80,7 +96,7 @@ export const CheckoutComponent = (props) => {
                         error: false,
                       })
                     }
-                    type="text"
+                    rows={3}
                     id="address"
                     className="border px-4 py-2"
                     placeholder="Address..."
@@ -105,20 +121,26 @@ export const CheckoutComponent = (props) => {
                     placeholder="+880"
                   />
                 </div>
-                
+
                 {/* Order Summary */}
                 <div className="border-t pt-4 mt-4">
                   <div className="flex justify-between py-2">
                     <span className="font-semibold">Subtotal:</span>
-                    <span className="font-semibold">${totalCost().toFixed(2)}</span>
+                    <span className="font-semibold">${subTotalAmount.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between py-2">
                     <span className="font-semibold">Delivery Charges:</span>
-                    <span className="font-semibold">${calculateDeliveryCharges(data.cartProduct).toFixed(2)}</span>
+                    <span className="font-semibold">${deliveryCharges.toFixed(2)}</span>
                   </div>
+                  {taxes.map((tax, i) => (
+                    <div key={i} className="flex justify-between py-2">
+                      <span className="font-semibold">{tax.label}:</span>
+                      <span className="font-semibold">${tax.amount.toFixed(2)}</span>
+                    </div>
+                  ))}
                   <div className="flex justify-between py-2 border-t pt-2">
                     <span className="font-bold text-lg">Total:</span>
-                    <span className="font-bold text-lg">${(totalCost() + calculateDeliveryCharges(data.cartProduct)).toFixed(2)}</span>
+                    <span className="font-bold text-lg">${finalTotal.toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -137,6 +159,7 @@ export const CheckoutComponent = (props) => {
                       setState,
                       totalCost,
                       calculateDeliveryCharges,
+                      settings,
                       history
                     )
                   }

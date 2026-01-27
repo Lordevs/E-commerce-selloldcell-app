@@ -14,11 +14,10 @@ const AdminSidebar = (props) => {
       >
         <div
           onClick={(e) => history.push("/admin/dashboard")}
-          className={`${
-            location.pathname === "/admin/dashboard"
-              ? "border-r-4 border-gray-800 bg-gray-100"
-              : ""
-          } hover:bg-gray-200 cursor-pointer flex flex-col items-center justify-center py-6`}
+          className={`${location.pathname === "/admin/dashboard"
+            ? "border-r-4 border-gray-800 bg-gray-100"
+            : ""
+            } hover:bg-gray-200 cursor-pointer flex flex-col items-center justify-center py-6`}
         >
           <span>
             <svg
@@ -41,11 +40,10 @@ const AdminSidebar = (props) => {
         <hr className="border-b border-gray-200" />
         <div
           onClick={(e) => history.push("/admin/dashboard/categories")}
-          className={`${
-            location.pathname === "/admin/dashboard/categories"
-              ? "border-r-4 border-gray-800 bg-gray-100"
-              : ""
-          } hover:bg-gray-200 cursor-pointer flex flex-col items-center justify-center py-6`}
+          className={`${location.pathname === "/admin/dashboard/categories"
+            ? "border-r-4 border-gray-800 bg-gray-100"
+            : ""
+            } hover:bg-gray-200 cursor-pointer flex flex-col items-center justify-center py-6`}
         >
           <span>
             <svg
@@ -68,11 +66,10 @@ const AdminSidebar = (props) => {
         <hr className="border-b border-gray-200" />
         <div
           onClick={(e) => history.push("/admin/dashboard/products")}
-          className={`${
-            location.pathname === "/admin/dashboard/products"
-              ? "border-r-4 border-gray-800 bg-gray-100"
-              : ""
-          } hover:bg-gray-200 cursor-pointer flex flex-col items-center justify-center py-6`}
+          className={`${location.pathname === "/admin/dashboard/products"
+            ? "border-r-4 border-gray-800 bg-gray-100"
+            : ""
+            } hover:bg-gray-200 cursor-pointer flex flex-col items-center justify-center py-6`}
         >
           <span>
             <svg
@@ -95,11 +92,10 @@ const AdminSidebar = (props) => {
         <hr className="border-b border-gray-200" />
         <div
           onClick={(e) => history.push("/admin/dashboard/orders")}
-          className={`${
-            location.pathname === "/admin/dashboard/orders"
-              ? "border-r-4 border-gray-800 bg-gray-100"
-              : ""
-          } hover:bg-gray-200 cursor-pointer flex flex-col items-center justify-center py-6`}
+          className={`${location.pathname === "/admin/dashboard/orders"
+            ? "border-r-4 border-gray-800 bg-gray-100"
+            : ""
+            } hover:bg-gray-200 cursor-pointer flex flex-col items-center justify-center py-6`}
         >
           <span>
             <svg
@@ -118,6 +114,32 @@ const AdminSidebar = (props) => {
             </svg>
           </span>
           <span className="hover:text-gray-800">Order</span>
+        </div>
+        <hr className="border-b border-gray-200" />
+        <div
+          onClick={(e) => history.push("/admin/dashboard/shipping-tax")}
+          className={`${location.pathname === "/admin/dashboard/shipping-tax"
+            ? "border-r-4 border-gray-800 bg-gray-100"
+            : ""
+            } hover:bg-gray-200 cursor-pointer flex flex-col items-center justify-center py-6`}
+        >
+          <span>
+            <svg
+              className="w-8 h-8 text-gray-600 hover:text-gray-800"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </span>
+          <span className="hover:text-gray-800 text-center px-2">Shipping & Tax</span>
         </div>
         <hr className="border-b border-gray-200" />
       </div>

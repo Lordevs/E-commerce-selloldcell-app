@@ -16,5 +16,8 @@
     "build:client": "cd client && npm run build"
   },
   "author": "Hasan | https://hasan-py.github.io",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^10.1.0"
+  }
 }
