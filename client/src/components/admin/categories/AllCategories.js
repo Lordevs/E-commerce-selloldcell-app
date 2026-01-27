@@ -99,11 +99,11 @@ const AllCategory = () => {
                             <td className="px-6 py-6 align-top text-center">
                                 {item.cStatus === "Active" ? (
                                   <span className="inline-flex items-center px-3 py-1 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[9px] font-bold uppercase tracking-widest">
-                                     Online
+                                     Active
                                   </span>
                                 ) : (
                                   <span className="inline-flex items-center px-3 py-1 bg-rose-50 text-rose-500 border border-rose-100 rounded-lg text-[9px] font-bold uppercase tracking-widest opacity-60">
-                                     Offline
+                                     Disabled
                                   </span>
                                 )}
                             </td>

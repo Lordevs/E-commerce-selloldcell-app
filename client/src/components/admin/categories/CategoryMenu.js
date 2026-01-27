@@ -3,7 +3,7 @@ import { CategoryContext } from "./index";
 import AddCategoryModal from "./AddCategoryModal";
 import EditCategoryModal from "./EditCategoryModal";
 
-const CategoryMenu = (props) => {
+const CategoryMenu = () => {
   const { dispatch } = useContext(CategoryContext);
 
   return (

@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useState } from "react";
 import { CategoryContext } from "./index";
 import { createCategory, getAllCategory } from "./FetchApi";
 
-const AddCategoryModal = (props) => {
+const AddCategoryModal = () => {
   const { data, dispatch } = useContext(CategoryContext);
 
   const [fData, setFdata] = useState({
@@ -99,7 +99,7 @@ const AddCategoryModal = (props) => {
   return (
     <Fragment>
       <div
-        onClick={(e) => dispatch({ type: "addCategoryModal", payload: false })}
+        onClick={() => dispatch({ type: "addCategoryModal", payload: false })}
         className={`${
           data.addCategoryModal ? "" : "hidden"
         } fixed inset-0 z-40 bg-gray-900/60 backdrop-blur-sm transition-opacity duration-500`}
@@ -130,12 +130,12 @@ const AddCategoryModal = (props) => {
           <div className="relative z-10 p-10 overflow-y-auto">
             {fData.error && (
                 <div className="mb-6 px-6 py-4 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl text-[10px] font-bold uppercase tracking-widest italic animate-pulse">
-                    Status Alert: {fData.error}
+                    Error: {fData.error}
                 </div>
             )}
             {fData.success && (
                 <div className="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl text-[10px] font-bold uppercase tracking-widest italic">
-                    Cluster Status: Successfully Deployed
+                    Category Added Successfully
                 </div>
             )}
 
@@ -169,8 +169,8 @@ const AddCategoryModal = (props) => {
                                     <svg className={`w-8 h-8 ${isDragging ? 'text-indigo-600' : 'text-gray-300'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                                 </div>
                                 <div className="text-center">
-                                    <p className="text-[10px] font-bold text-gray-900 uppercase tracking-widest">Drag & Drop Image</p>
-                                    <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest mt-1 italic">or click to browse assets</p>
+                                    <p className="text-[10px] font-bold text-gray-900 uppercase tracking-widest">Drop Image Here</p>
+                                    <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest mt-1 italic">Click to Upload</p>
                                 </div>
                             </div>
                         )}
@@ -185,11 +185,11 @@ const AddCategoryModal = (props) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="name">Title </label>
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="name">Name</label>
                         <input
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, cName: e.target.value })}
                             value={fData.cName}
-                            placeholder="CLASSIFICATION NAME"
+                            placeholder="Category Name"
                             className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-gray-600 uppercase tracking-tight"
                             type="text"
                             required
@@ -204,8 +204,8 @@ const AddCategoryModal = (props) => {
                                 className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 id="status"
                             >
-                                <option value="Active">Operational</option>
-                                <option value="Disabled">Deactivated</option>
+                                <option value="Active">Active</option>
+                                <option value="Disabled">Disabled</option>
                             </select>
                             <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-hover/select:text-indigo-600 transition-colors">
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
@@ -219,7 +219,7 @@ const AddCategoryModal = (props) => {
                     <textarea
                         onChange={(e) => setFdata({ ...fData, success: false, error: false, cDescription: e.target.value })}
                         value={fData.cDescription}
-                        placeholder="Define categorization scope and logic..."
+                        placeholder="Category Description..."
                         className="px-8 py-6 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-gray-500 min-h-[150px] italic"
                         name="description"
                         id="description"

@@ -16,7 +16,7 @@ const CategoryComponent = () => {
   );
 };
 
-const Categories = (props) => {
+const Categories = () => {
   const [data, dispatch] = useReducer(categoryReducer, categoryState);
   return (
     <Fragment>

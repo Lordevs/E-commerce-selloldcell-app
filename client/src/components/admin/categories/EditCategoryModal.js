@@ -4,7 +4,7 @@ import { editCategory, getAllCategory } from "./FetchApi";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
-const EditCategoryModal = (props) => {
+const EditCategoryModal = () => {
   const { data, dispatch } = useContext(CategoryContext);
 
   const [name, setName] = useState("");
@@ -85,7 +85,7 @@ const EditCategoryModal = (props) => {
   return (
     <Fragment>
       <div
-        onClick={(e) => dispatch({ type: "editCategoryModalClose" })}
+        onClick={() => dispatch({ type: "editCategoryModalClose" })}
         className={`${
           data.editCategoryModal.modal ? "" : "hidden"
         } fixed inset-0 z-40 bg-gray-900/60 backdrop-blur-sm transition-opacity duration-500`}
@@ -156,11 +156,11 @@ const EditCategoryModal = (props) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="name">Title</label>
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="name">Name</label>
                         <input
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            placeholder="CLASSIFICATION NAME"
+                            placeholder="Category Name"
                             className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 uppercase tracking-tight"
                             type="text"
                             required
@@ -176,8 +176,8 @@ const EditCategoryModal = (props) => {
                                 className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 id="status"
                             >
-                                <option value="Active">Operational Status</option>
-                                <option value="Disabled">Deactivated Status</option>
+                                <option value="Active">Active</option>
+                                <option value="Disabled">Disabled</option>
                             </select>
                             <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-hover/select:text-emerald-600 transition-colors">
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
@@ -191,7 +191,7 @@ const EditCategoryModal = (props) => {
                     <textarea
                         value={des}
                         onChange={(e) => setDes(e.target.value)}
-                        placeholder="Modify categorization scope..."
+                        placeholder="Category Description..."
                         className="px-8 py-6 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-medium text-gray-500 min-h-[150px] italic"
                         name="description"
                         id="description"
