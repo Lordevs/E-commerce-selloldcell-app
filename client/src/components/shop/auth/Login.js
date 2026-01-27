@@ -63,7 +63,7 @@ const Login = () => {
       <form className="space-y-6">
         <div className="flex flex-col">
           <label htmlFor="name" className="text-sm font-medium text-gray-700 mb-2">
-            Username or email address
+             Email Address
             <span className="text-red-500 ml-1">*</span>
           </label>
           <div className="relative">
