@@ -231,7 +231,7 @@ const AddProductModal = () => {
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, pName: e.target.value })}
                             value={fData.pName}
                             placeholder="Product Name"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-gray-600 uppercase tracking-tight"
+                            className="px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-xs text-gray-600 uppercase tracking-tight"
                             type="text"
                             required
                         />
@@ -242,7 +242,7 @@ const AddProductModal = () => {
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, pPrice: e.target.value })}
                             value={fData.pPrice}
                             placeholder="0.00"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-gray-600 uppercase tracking-tight"
+                            className="px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-xs text-gray-600 uppercase tracking-tight"
                             type="number"
                             required
                         />
@@ -253,7 +253,7 @@ const AddProductModal = () => {
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, pOffer: e.target.value })}
                             value={fData.pOffer}
                             placeholder="0"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-gray-600 uppercase tracking-tight text-rose-500"
+                            className="px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-xs text-gray-600 uppercase tracking-tight text-rose-500"
                             type="number"
                         />
                     </div>
@@ -262,11 +262,11 @@ const AddProductModal = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div className="flex flex-col space-y-2">
                         <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Category</label>
-                        <div className="relative group/select">
+                        <div className="relative group">
                             <select
                                 onChange={(e) => setFdata({ ...fData, success: false, error: false, pCategory: e.target.value })}
                                 value={fData.pCategory}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-xs text-gray-600 appearance-none italic uppercase tracking-widest pr-10 cursor-pointer"
                                 required
                             >
                                 <option disabled value="">Select Category</option>
@@ -274,18 +274,18 @@ const AddProductModal = () => {
                                     <option key={cat._id} value={cat._id}>{cat.cName.toUpperCase()}</option>
                                 ))}
                             </select>
-                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 group-hover/select:text-indigo-600 transition-colors">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-600 group-hover:text-indigo-600 transition-colors">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                             </div>
                         </div>
                     </div>
                     <div className="flex flex-col space-y-2">
                         <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Size</label>
-                        <div className="relative group/select">
+                        <div className="relative group">
                             <select
                                 onChange={(e) => setFdata({ ...fData, pSize: e.target.value })}
                                 value={fData.pSize}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-xs text-gray-600 appearance-none italic uppercase tracking-widest pr-10 cursor-pointer"
                                 required
                             >
                                 <option value="" disabled>Select Size</option>
@@ -295,8 +295,8 @@ const AddProductModal = () => {
                                 <option value="50 ml">50 ML</option>
                                 <option value="Other">Other</option>
                             </select>
-                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 group-hover/select:text-indigo-600 transition-colors">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-600 group-hover:text-indigo-600 transition-colors">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                             </div>
                         </div>
                         {fData.pSize === "Other" && (
@@ -305,18 +305,18 @@ const AddProductModal = () => {
                                 onChange={(e) => setCustomSize(e.target.value)}
                                 placeholder="Enter custom size (ml)"
                                 type="number"
-                                className="mt-3 px-8 py-5 bg-gray-50 border-2 border-indigo-400 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-600 transition-all font-bold text-gray-600 uppercase tracking-tight"
+                                className="mt-3 px-4 py-3 bg-gray-50 border-2 border-indigo-400 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-600 transition-all font-medium text-xs text-gray-600 uppercase tracking-tight"
                                 required
                             />
                         )}
                     </div>
                     <div className="flex flex-col space-y-2">
                         <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Type</label>
-                        <div className="relative group/select">
+                        <div className="relative group">
                             <select
                                 onChange={(e) => setFdata({ ...fData, pProperty: e.target.value })}
                                 value={fData.pProperty}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-xs text-gray-600 appearance-none italic uppercase tracking-widest pr-10 cursor-pointer"
                                 required
                             >
                                 <option value="" disabled>Select Type</option>
@@ -327,25 +327,25 @@ const AddProductModal = () => {
                                 <option value="Attar">Attar</option>
                                 <option value="Rollon">Rollon</option>
                             </select>
-                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 group-hover/select:text-indigo-600 transition-colors">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-600 group-hover:text-indigo-600 transition-colors">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                             </div>
                         </div>
                     </div>
                     <div className="flex flex-col space-y-2">
                         <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Status</label>
-                        <div className="relative group/select">
+                        <div className="relative group">
                             <select
                                 onChange={(e) => setFdata({ ...fData, pStatus: e.target.value })}
                                 value={fData.pStatus}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-xs text-gray-600 appearance-none italic uppercase tracking-widest pr-10 cursor-pointer"
                                 required
                             >
                                 <option value="Active">Active</option>
                                 <option value="Disabled">Disabled</option>
                             </select>
-                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 group-hover/select:text-indigo-600 transition-colors">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-600 group-hover:text-indigo-600 transition-colors">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                             </div>
                         </div>
                     </div>
@@ -358,7 +358,7 @@ const AddProductModal = () => {
                             onChange={(e) => setFdata({ ...fData, pDescription: e.target.value })}
                             value={fData.pDescription}
                             placeholder="Product Description..."
-                            className="px-8 py-6 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-gray-500 min-h-[120px] italic"
+                            className="px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-xs text-gray-500 min-h-[120px] italic"
                             required
                         />
                     </div>
@@ -368,7 +368,7 @@ const AddProductModal = () => {
                             onChange={(e) => setFdata({ ...fData, pQuantity: e.target.value })}
                             value={fData.pQuantity}
                             placeholder="0"
-                            className="px-8 py-10 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-4xl text-gray-600 text-center tracking-tighter"
+                            className="px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-xs text-gray-600 text-center tracking-tighter"
                             type="number"
                             required
                         />
