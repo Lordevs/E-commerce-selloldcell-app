@@ -44,11 +44,12 @@ const AddProductDetail = ({ categories }) => {
     e.preventDefault();
     e.target.reset();
 
-    if (!fData.pImage) {
-      setFdata({ ...fData, error: "Please upload at least 2 image" });
+    if (!fData.pImage || fData.pImage.length < 1) {
+      setFdata({ ...fData, error: "Please upload at least 1 image" });
       setTimeout(() => {
         setFdata({ ...fData, error: false });
       }, 2000);
+      return;
     }
 
     try {
@@ -209,7 +210,7 @@ const AddProductDetail = ({ categories }) => {
               {/* Most Important part for uploading multiple image */}
               <div className="flex flex-col mt-4">
                 <label htmlFor="image">Product Images *</label>
-                <span className="text-gray-600 text-xs">Must need 2 images</span>
+                <span className="text-gray-600 text-xs">Must need at least 1 image</span>
                 <input
                   onChange={(e) =>
                     setFdata({

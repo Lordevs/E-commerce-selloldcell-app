@@ -106,24 +106,18 @@ const ProductDetailsSection = (props) => {
       <section className="m-4 md:mx-12 md:my-6">
         <div className="grid grid-cols-2 md:grid-cols-12">
           <div className="hidden md:block md:col-span-1 md:flex md:flex-col md:space-y-4 md:mr-2">
-            <img
-              onClick={(e) =>
-                slideImage("increase", 0, count, setCount, pImages)
-              }
-              className={`${count === 0 ? "" : "opacity-25"
-                } cursor-pointer w-20 h-20 object-cover object-center`}
-              src={`${apiURL}/uploads/products/${sProduct.pImages[0]}`}
-              alt="pic"
-            />
-            <img
-              onClick={(e) =>
-                slideImage("increase", 1, count, setCount, pImages)
-              }
-              className={`${count === 1 ? "" : "opacity-25"
-                } cursor-pointer w-20 h-20 object-cover object-center`}
-              src={`${apiURL}/uploads/products/${sProduct.pImages[1]}`}
-              alt="pic"
-            />
+            {sProduct.pImages.map((img, i) => (
+              <img
+                key={i}
+                onClick={(e) =>
+                  slideImage("increase", i, count, setCount, pImages)
+                }
+                className={`${count === i ? "" : "opacity-25"
+                  } cursor-pointer w-20 h-20 object-cover object-center`}
+                src={`${apiURL}/uploads/products/${img}`}
+                alt="pic"
+              />
+            ))}
           </div>
           <div className="col-span-2 md:col-span-7">
             <div className="relative w-full max-w-[250px] aspect-square  overflow-hidden rounded-lg">
