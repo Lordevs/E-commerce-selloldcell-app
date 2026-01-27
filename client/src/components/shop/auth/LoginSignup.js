@@ -39,28 +39,30 @@ const LoginSignup = (props) => {
           data.loginSignupModal ? "" : "hidden"
         } fixed z-40 inset-0 my-8 md:my-20 flex items-start justify-center overflow-auto`}
       >
-        <div className="w-11/12 md:w-3/5 lg:w-2/4 relative space-y-4 bg-white p-6 md:px-12 md:py-6">
+        <div className="w-11/12 md:w-3/5 lg:w-2/4 relative bg-white p-6 md:px-12 md:py-10 rounded-3xl shadow-2xl flex flex-col space-y-6">
           {login ? <Login /> : <Signup />}
-          <div className="flex items-center space-x-2">
-            <span className="border-b border-gray-500 w-full" />
-            <span className="font-medium">or</span>
-            <span className="border-b border-gray-500 w-full" />
+          
+          <div className="flex items-center justify-between space-x-4">
+            <span className="h-px bg-gray-200 w-full" />
+            <span className="text-gray-400 font-medium text-sm whitespace-nowrap">or continue with</span>
+            <span className="h-px bg-gray-200 w-full" />
           </div>
+
           <div
             onClick={(e) => changeLoginSignup()}
-            style={{ color: "#303031", border: "1px solid #303031" }}
-            className="px-4 py-2 font-medium text-center cursor-pointer"
+            className="w-full py-3 border-2 border-gray-900 text-gray-900 hover:bg-gray-50 rounded-xl font-bold text-sm tracking-widest uppercase transition-all flex items-center justify-center cursor-pointer shadow-sm hover:shadow-md"
           >
             {loginValue}
           </div>
+          
           {/*  Modal Close Button */}
-          <div className="absolute top-0 right-0 mx-4">
+          <div className="absolute top-4 right-4 p-2 bg-gray-50 rounded-full hover:bg-gray-100 transition-colors">
             <svg
               onClick={(e) => {
                 loginSignupModalToggle();
                 dispatch({ type: "loginSignupError", payload: false });
               }}
-              className="w-6 h-6 cursor-pointer"
+              className="w-5 h-5 cursor-pointer text-gray-500 hover:text-gray-900"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
