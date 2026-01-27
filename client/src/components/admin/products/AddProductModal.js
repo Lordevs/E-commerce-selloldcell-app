@@ -3,18 +3,14 @@ import { ProductContext } from "./index";
 import { createProduct, getAllProduct } from "./FetchApi";
 import { getAllCategory } from "../categories/FetchApi";
 
-const AddProductDetail = ({ categories }) => {
+const AddProductModal = (props) => {
   const { data, dispatch } = useContext(ProductContext);
-
-  const alert = (msg, type) => (
-    <div className={`bg-${type}-200 py-2 px-4 w-full`}>{msg}</div>
-  );
 
   const [fData, setFdata] = useState({
     pName: "",
     pDescription: "",
     pStatus: "Active",
-    pImage: null, // Initial value will be null or empty array
+    pImage: [], 
     pCategory: "",
     pPrice: "",
     pOffer: 0,
@@ -26,42 +22,88 @@ const AddProductDetail = ({ categories }) => {
     error: false,
   });
 
+  const [categories, setCategories] = useState([]);
+  const [previews, setPreviews] = useState([]);
+  const [isDragging, setIsDragging] = useState(false);
   const [customSize, setCustomSize] = useState("");
+
+  useEffect(() => {
+    fetchCategoryData();
+  }, []);
+
+  const fetchCategoryData = async () => {
+    let responseData = await getAllCategory();
+    if (responseData.Categories) {
+      setCategories(responseData.Categories);
+    }
+  };
 
   const fetchData = async () => {
     let responseData = await getAllProduct();
-    setTimeout(() => {
-      if (responseData && responseData.Products) {
-        dispatch({
-          type: "fetchProductsAndChangeState",
-          payload: responseData.Products,
-        });
-      }
-    }, 1000);
+    if (responseData && responseData.Products) {
+      dispatch({
+        type: "fetchProductsAndChangeState",
+        payload: responseData.Products,
+      });
+    }
+  };
+
+  const handleImageChange = (files) => {
+    const fileList = Array.from(files);
+    const validImages = fileList.filter(file => file.type.startsWith('image/'));
+    
+    if (validImages.length > 0) {
+      setFdata({ ...fData, pImage: [...fData.pImage, ...validImages] });
+      const newPreviews = validImages.map(file => URL.createObjectURL(file));
+      setPreviews([...previews, ...newPreviews]);
+    }
+  };
+
+  const removeImage = (index) => {
+    const newImages = [...fData.pImage];
+    newImages.splice(index, 1);
+    const newPreviews = [...previews];
+    newPreviews.splice(index, 1);
+    
+    setFdata({ ...fData, pImage: newImages });
+    setPreviews(newPreviews);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    handleImageChange(e.dataTransfer.files);
   };
 
   const submitForm = async (e) => {
     e.preventDefault();
-    e.target.reset();
+    dispatch({ type: "loading", payload: true });
 
     if (!fData.pImage || fData.pImage.length < 1) {
-      setFdata({ ...fData, error: "Please upload at least 1 image" });
-      setTimeout(() => {
-        setFdata({ ...fData, error: false });
-      }, 2000);
-      return;
+      dispatch({ type: "loading", payload: false });
+      return setFdata({ ...fData, error: "Please upload at least one identification asset" });
     }
 
     try {
       let finalSize = fData.pSize === "Other" ? `${customSize} ml` : fData.pSize;
       let responseData = await createProduct({ ...fData, pSize: finalSize });
+      
       if (responseData.success) {
         fetchData();
         setFdata({
-          ...fData,
           pName: "",
           pDescription: "",
-          pImage: "",
+          pImage: [],
           pStatus: "Active",
           pCategory: "",
           pPrice: "",
@@ -73,349 +115,286 @@ const AddProductDetail = ({ categories }) => {
           success: responseData.success,
           error: false,
         });
+        setPreviews([]);
         setCustomSize("");
+        dispatch({ type: "loading", payload: false });
         setTimeout(() => {
-          setFdata({
-            ...fData,
-            pName: "",
-            pDescription: "",
-            pImage: "",
-            pStatus: "Active",
-            pCategory: "",
-            pPrice: "",
-            pQuantity: "",
-            pOffer: 0,
-            pDeliveryCharges: 0,
-            pSize: "",
-            pProperty: "",
-            success: false,
-            error: false,
-          });
-          dispatch({ type: "addProductModal", payload: false });
-        }, 2000);
+           dispatch({ type: "addProductModal", payload: false });
+        }, 1000);
       } else if (responseData.error) {
         setFdata({ ...fData, success: false, error: responseData.error });
-        setTimeout(() => {
-          return setFdata({ ...fData, error: false, success: false });
-        }, 2000);
+        dispatch({ type: "loading", payload: false });
       }
     } catch (error) {
       console.log(error);
+      dispatch({ type: "loading", payload: false });
     }
   };
 
   return (
     <Fragment>
-      {/* Black Overlay */}
       <div
         onClick={(e) => dispatch({ type: "addProductModal", payload: false })}
-        className={`${data.addProductModal ? "" : "hidden"
-          } fixed top-0 left-0 z-30 w-full h-full bg-black opacity-50`}
+        className={`${
+          data.addProductModal ? "" : "hidden"
+        } fixed inset-0 z-40 bg-gray-900/60 backdrop-blur-sm transition-opacity duration-500`}
       />
-      {/* End Black Overlay */}
 
-      {/* Modal Start */}
       <div
-        className={`${data.addProductModal ? "" : "hidden"
-          } fixed inset-0 z-30 overflow-y-auto`}
-        style={{ paddingTop: '1rem', paddingBottom: '1rem' }}
+        className={`${
+          data.addProductModal ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0 pointer-events-none"
+        } fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-500 overflow-y-auto`}
       >
-        <div className="min-h-full flex items-start md:items-center justify-center px-4">
-          <div className="relative bg-white w-11/12 md:w-2/3 lg:w-1/2 xl:w-2/5 max-w-2xl shadow-lg flex flex-col items-center space-y-4 px-4 py-4 md:px-8 my-4 md:my-8">
-            <div className="flex items-center justify-between w-full pt-4">
-              <span className="text-left font-semibold text-2xl tracking-wider">
-                Add Product
-              </span>
-              {/* Close Modal */}
-              <span
-                style={{ background: "#303031" }}
-                onClick={(e) =>
-                  dispatch({ type: "addProductModal", payload: false })
-                }
-                className="cursor-pointer text-gray-100 py-2 px-2 rounded-full"
-              >
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </span>
+        <div className="relative bg-white w-full max-w-4xl rounded-[3rem] shadow-2xl overflow-hidden flex flex-col border border-gray-100 max-h-[90vh] my-auto">
+          
+          <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-50 rounded-full blur-3xl -mr-40 -mt-40 opacity-50"></div>
+
+          <div className="relative z-10 flex items-center justify-between px-10 py-8 border-b border-gray-50 bg-gray-50/30">
+            <div>
+                 <h2 className="text-2xl font-black text-gray-900 tracking-tighter uppercase italic">Register <span className="text-indigo-600">Product Asset</span></h2>
+                 <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mt-1 italic">Initialize new inventory classification</p>
             </div>
-            {fData.error ? alert(fData.error, "red") : ""}
-            {fData.success ? alert(fData.success, "green") : ""}
-            <form className="w-full" onSubmit={(e) => submitForm(e)}>
-              <div className="flex space-x-1 py-4">
-                <div className="w-1/2 flex flex-col space-y-1 space-x-1">
-                  <label htmlFor="name">Product Name *</label>
-                  <input
-                    value={fData.pName}
-                    onChange={(e) =>
-                      setFdata({
-                        ...fData,
-                        error: false,
-                        success: false,
-                        pName: e.target.value,
-                      })
-                    }
-                    className="px-4 py-2 border focus:outline-none"
-                    type="text"
-                  />
-                </div>
-                <div className="w-1/2 flex flex-col space-y-1 space-x-1">
-                  <label htmlFor="price">Product Price *</label>
-                  <input
-                    value={fData.pPrice}
-                    onChange={(e) =>
-                      setFdata({
-                        ...fData,
-                        error: false,
-                        success: false,
-                        pPrice: e.target.value,
-                      })
-                    }
-                    type="number"
-                    className="px-4 py-2 border focus:outline-none"
-                    id="price"
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col space-y-2">
-                <label htmlFor="description">Product Description *</label>
-                <textarea
-                  value={fData.pDescription}
-                  onChange={(e) =>
-                    setFdata({
-                      ...fData,
-                      error: false,
-                      success: false,
-                      pDescription: e.target.value,
-                    })
-                  }
-                  className="px-4 py-2 border focus:outline-none"
-                  name="description"
-                  id="description"
-                  cols={5}
-                  rows={2}
-                />
-              </div>
-              {/* Most Important part for uploading multiple image */}
-              <div className="flex flex-col mt-4">
-                <label htmlFor="image">Product Images *</label>
-                <span className="text-gray-600 text-xs">Must need at least 1 image</span>
-                <input
-                  onChange={(e) =>
-                    setFdata({
-                      ...fData,
-                      error: false,
-                      success: false,
-                      pImage: [...e.target.files],
-                    })
-                  }
-                  type="file"
-                  accept=".jpg, .jpeg, .png"
-                  className="px-4 py-2 border focus:outline-none"
-                  id="image"
-                  multiple
-                />
-              </div>
-              {/* Most Important part for uploading multiple image */}
-              <div className="flex space-x-1 py-4">
-                <div className="w-1/2 flex flex-col space-y-1">
-                  <label htmlFor="status">Product Status *</label>
-                  <select
-                    value={fData.pStatus}
-                    onChange={(e) =>
-                      setFdata({
-                        ...fData,
-                        error: false,
-                        success: false,
-                        pStatus: e.target.value,
-                      })
-                    }
-                    name="status"
-                    className="px-4 py-2 border focus:outline-none"
-                    id="status"
-                  >
-                    <option name="status" value="Active">
-                      Active
-                    </option>
-                    <option name="status" value="Disabled">
-                      Disabled
-                    </option>
-                  </select>
-                </div>
-                <div className="w-1/2 flex flex-col space-y-1">
-                  <label htmlFor="status">Product Category *</label>
-                  <select
-                    value={fData.pCategory}
-                    onChange={(e) =>
-                      setFdata({
-                        ...fData,
-                        error: false,
-                        success: false,
-                        pCategory: e.target.value,
-                      })
-                    }
-                    name="status"
-                    className="px-4 py-2 border focus:outline-none"
-                    id="status"
-                  >
-                    <option disabled value="">
-                      Select a category
-                    </option>
-                    {categories.length > 0
-                      ? categories.map(function (elem) {
-                        return (
-                          <option name="status" value={elem._id} key={elem._id}>
-                            {elem.cName}
-                          </option>
-                        );
-                      })
-                      : ""}
-                  </select>
-                </div>
-              </div>
-              <div className="flex space-x-1 py-4">
-                <div className="w-1/2 flex flex-col space-y-1">
-                  <label htmlFor="quantity">Product in Stock *</label>
-                  <input
-                    value={fData.pQuantity}
-                    onChange={(e) =>
-                      setFdata({
-                        ...fData,
-                        error: false,
-                        success: false,
-                        pQuantity: e.target.value,
-                      })
-                    }
-                    type="number"
-                    className="px-4 py-2 border focus:outline-none"
-                    id="quantity"
-                  />
-                </div>
-                <div className="w-1/2 flex flex-col space-y-1">
-                  <label htmlFor="offer">Product Offfer (%) *</label>
-                  <input
-                    value={fData.pOffer}
-                    onChange={(e) =>
-                      setFdata({
-                        ...fData,
-                        error: false,
-                        success: false,
-                        pOffer: e.target.value,
-                      })
-                    }
-                    type="number"
-                    className="px-4 py-2 border focus:outline-none"
-                    id="offer"
-                  />
-                </div>
-              </div>
+            <button
+                onClick={(e) => dispatch({ type: "addProductModal", payload: false })}
+                className="w-10 h-10 flex items-center justify-center rounded-2xl bg-white border border-gray-100 text-gray-600 hover:text-gray-900 hover:shadow-lg transition-all"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
 
-              <div className="flex space-x-1 py-4">
-                <div className="w-1/2 flex flex-col space-y-1">
-                  <label htmlFor="size">Product Size *</label>
-                  <select
-                    value={fData.pSize}
-                    onChange={(e) =>
-                      setFdata({
-                        ...fData,
-                        error: false,
-                        success: false,
-                        pSize: e.target.value,
-                      })
-                    }
-                    name="size"
-                    className="px-4 py-2 border focus:outline-none"
-                    id="size"
-                  >
-                    <option value="" disabled>Select Size</option>
-                    <option value="5 ml">5 ml</option>
-                    <option value="10 ml">10 ml</option>
-                    <option value="20 ml">20 ml</option>
-                    <option value="50 ml">50 ml</option>
-                    <option value="Other">Other</option>
-                  </select>
-                  {fData.pSize === "Other" && (
-                    <input
-                      value={customSize}
-                      onChange={(e) => setCustomSize(e.target.value)}
-                      placeholder="Enter ml"
-                      type="number"
-                      className="mt-2 px-4 py-2 border focus:outline-none"
-                    />
-                  )}
+          <div className="relative z-10 p-10 overflow-y-auto">
+            {fData.error && (
+                <div className="mb-6 px-6 py-4 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl text-[10px] font-black uppercase tracking-widest italic animate-pulse">
+                    Logic Conflict: {fData.error}
                 </div>
-                <div className="w-1/2 flex flex-col space-y-1">
-                  <label htmlFor="property">Product Property *</label>
-                  <select
-                    value={fData.pProperty}
-                    onChange={(e) =>
-                      setFdata({
-                        ...fData,
-                        error: false,
-                        success: false,
-                        pProperty: e.target.value,
-                      })
-                    }
-                    name="property"
-                    className="px-4 py-2 border focus:outline-none"
-                    id="property"
-                  >
-                    <option value="" disabled>Select Property</option>
-                    <option value="Perfume">Perfume</option>
-                    <option value="Edt">Edt</option>
-                    <option value="Edp">Edp</option>
-                    <option value="Edu">Edu</option>
-                    <option value="Attar">Attar</option>
-                    <option value="Rollon">Rollon</option>
-                  </select>
+            )}
+            {fData.success && (
+                <div className="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl text-[10px] font-black uppercase tracking-widest italic">
+                    Protocol Success: Asset Synchronized
                 </div>
-              </div>
+            )}
 
-              <div className="flex flex-col space-y-1 w-full pb-4 md:pb-6 mt-4">
-                <button
-                  style={{ background: "#303031" }}
-                  type="submit"
-                  className="rounded-full bg-gray-800 text-gray-100 text-lg font-medium py-2"
-                >
-                  Create product
-                </button>
-              </div>
+            <form className="space-y-8" onSubmit={submitForm}>
+                
+                {/* Image Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div className="lg:col-span-5 flex flex-col space-y-4">
+                        <div 
+                          onDragOver={handleDragOver}
+                          onDragLeave={handleDragLeave}
+                          onDrop={handleDrop}
+                          className={`relative group h-64 rounded-[2rem] border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center overflow-hidden shadow-inner ${isDragging ? 'border-indigo-500 bg-indigo-50/50 scale-[1.02]' : 'border-gray-100 bg-gray-50/50 hover:border-indigo-300 hover:bg-white'}`}
+                        >
+                            <div className="flex flex-col items-center space-y-3 pointer-events-none">
+                                <div className={`p-4 rounded-2xl bg-white shadow-sm border border-gray-100 transition-transform duration-500 ${isDragging ? 'scale-110 rotate-12' : ''}`}>
+                                    <svg className={`w-8 h-8 ${isDragging ? 'text-indigo-600' : 'text-gray-300'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                                </div>
+                                <div className="text-center px-4">
+                                    <p className="text-[10px] font-black text-gray-900 uppercase tracking-widest leading-tight">Drag & Drop Identifiers</p>
+                                    <p className="text-[9px] text-gray-600 font-bold uppercase tracking-widest mt-1 italic leading-tight">or click to browse multiple assets</p>
+                                </div>
+                            </div>
+                            <input
+                                accept="image/*"
+                                onChange={(e) => handleImageChange(e.target.files)}
+                                className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                                type="file"
+                                multiple
+                            />
+                        </div>
+                    </div>
+
+                    <div className="lg:col-span-12">
+                        {previews.length > 0 && (
+                            <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4 mt-2">
+                                {previews.map((src, index) => (
+                                    <div key={index} className="relative group/img aspect-square rounded-xl overflow-hidden border border-gray-100 shadow-sm bg-gray-50">
+                                        <img src={src} className="w-full h-full object-contain p-1" alt={`Preview ${index}`} />
+                                        <button 
+                                            type="button" 
+                                            onClick={() => removeImage(index)}
+                                            className="absolute top-1 right-1 w-6 h-6 bg-rose-500 text-white rounded-lg flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity transform hover:scale-110 shadow-lg"
+                                        >
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12" /></svg>
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Info Section */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="flex flex-col space-y-2">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Product Name</label>
+                        <input
+                            onChange={(e) => setFdata({ ...fData, success: false, error: false, pName: e.target.value })}
+                            value={fData.pName}
+                            placeholder="ASSET IDENTIFIER"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-black text-gray-900 uppercase tracking-tight"
+                            type="text"
+                            required
+                        />
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Base Valuation ($)</label>
+                        <input
+                            onChange={(e) => setFdata({ ...fData, success: false, error: false, pPrice: e.target.value })}
+                            value={fData.pPrice}
+                            placeholder="0.00"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-black text-gray-900 uppercase tracking-tight"
+                            type="number"
+                            required
+                        />
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Incentive Offer (%)</label>
+                        <input
+                            onChange={(e) => setFdata({ ...fData, success: false, error: false, pOffer: e.target.value })}
+                            value={fData.pOffer}
+                            placeholder="0"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-black text-gray-900 uppercase tracking-tight text-rose-500"
+                            type="number"
+                        />
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="flex flex-col space-y-2">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Category Link</label>
+                        <div className="relative group/select">
+                            <select
+                                onChange={(e) => setFdata({ ...fData, success: false, error: false, pCategory: e.target.value })}
+                                value={fData.pCategory}
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                required
+                            >
+                                <option disabled value="">SELECT CATEGORY</option>
+                                {categories.map(cat => (
+                                    <option key={cat._id} value={cat._id}>{cat.cName.toUpperCase()}</option>
+                                ))}
+                            </select>
+                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 group-hover/select:text-indigo-600 transition-colors">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Product Size</label>
+                        <div className="relative group/select">
+                            <select
+                                onChange={(e) => setFdata({ ...fData, pSize: e.target.value })}
+                                value={fData.pSize}
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                required
+                            >
+                                <option value="" disabled>SELECT SIZE</option>
+                                <option value="5 ml">5 ML UNIT</option>
+                                <option value="10 ml">10 ML UNIT</option>
+                                <option value="20 ml">20 ML UNIT</option>
+                                <option value="50 ml">50 ML UNIT</option>
+                                <option value="Other">CUSTOM SIZE</option>
+                            </select>
+                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 group-hover/select:text-indigo-600 transition-colors">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                            </div>
+                        </div>
+                        {fData.pSize === "Other" && (
+                            <input
+                                value={customSize}
+                                onChange={(e) => setCustomSize(e.target.value)}
+                                placeholder="ENTER ML"
+                                type="number"
+                                className="mt-2 px-8 py-4 bg-white border border-indigo-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 font-black text-gray-900"
+                            />
+                        )}
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Product Property</label>
+                        <div className="relative group/select">
+                            <select
+                                onChange={(e) => setFdata({ ...fData, pProperty: e.target.value })}
+                                value={fData.pProperty}
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                required
+                            >
+                                <option value="" disabled>SELECT PROPERTY</option>
+                                <option value="Perfume">PERFUME</option>
+                                <option value="Edt">EDT</option>
+                                <option value="Edp">EDP</option>
+                                <option value="Edu">EDU</option>
+                                <option value="Attar">ATTAR</option>
+                                <option value="Rollon">ROLLON</option>
+                            </select>
+                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 group-hover/select:text-indigo-600 transition-colors">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Logistics Status</label>
+                        <div className="relative group/select">
+                            <select
+                                onChange={(e) => setFdata({ ...fData, pStatus: e.target.value })}
+                                value={fData.pStatus}
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                required
+                            >
+                                <option value="Active">OPERATIONAL</option>
+                                <option value="Disabled">DEACTIVATED</option>
+                            </select>
+                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 group-hover/select:text-indigo-600 transition-colors">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div className="lg:col-span-8 flex flex-col space-y-2">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Product Description</label>
+                        <textarea
+                            onChange={(e) => setFdata({ ...fData, pDescription: e.target.value })}
+                            value={fData.pDescription}
+                            placeholder="DEFINE ASSET SCOPE AND CHARACTERISTICS..."
+                            className="px-8 py-6 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-medium text-gray-500 min-h-[120px] italic"
+                            required
+                        />
+                    </div>
+                    <div className="lg:col-span-4 flex flex-col space-y-2">
+                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Inventory Threshold</label>
+                        <input
+                            onChange={(e) => setFdata({ ...fData, pQuantity: e.target.value })}
+                            value={fData.pQuantity}
+                            placeholder="0"
+                            className="px-8 py-10 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-black text-4xl text-gray-900 text-center tracking-tighter"
+                            type="number"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div className="pt-4 pb-10">
+                    <button
+                        type="submit"
+                        disabled={data.loading}
+                        className="w-full py-6 bg-gray-900 hover:bg-black text-white rounded-[2rem] font-black text-[11px] uppercase tracking-[0.4em] transition-all shadow-2xl shadow-gray-200 hover:-translate-y-2 active:scale-95 flex items-center justify-center space-x-4"
+                    >
+                        {data.loading ? (
+                             <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+                        ) : (
+                            <Fragment>
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4" /></svg>
+                                <span>Commit to Database</span>
+                            </Fragment>
+                        )}
+                    </button>
+                </div>
             </form>
           </div>
         </div>
       </div>
-    </Fragment>
-  );
-};
-
-const AddProductModal = (props) => {
-  useEffect(() => {
-    fetchCategoryData();
-  }, []);
-
-  const [allCat, setAllCat] = useState({});
-
-  const fetchCategoryData = async () => {
-    let responseData = await getAllCategory();
-    if (responseData.Categories) {
-      setAllCat(responseData.Categories);
-    }
-  };
-
-  return (
-    <Fragment>
-      <AddProductDetail categories={allCat} />
     </Fragment>
   );
 };
