@@ -62,29 +62,31 @@ const SearchFilter = (props) => {
 
   return (
     <Fragment>
-      <div className="rounded-full flex items-center justify-between overflow-hidden">
-        <span style={{ background: "#303031" }} className="py-2 px-3">
-          <svg
-            className="rounded-l-full w-6 h-6 text-gray-100"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </span>
+    <Fragment>
+      <div className="flex items-center space-x-2 bg-white border border-gray-100 rounded-2xl px-4 py-4 shadow-lg hover:shadow-xl transition-all w-full md:w-80 group/search">
+        <svg
+          className="w-5 h-5 text-gray-300 group-hover/search:text-emerald-500 transition-colors"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2.5"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Transaction id..."
-          className="py-2 px-2 focus:outline-none rounded-r-full border-1 border-gray-500 w-full"
+          placeholder="SEARCH TRANSACTION ID..."
+          className="bg-transparent border-none text-xs font-bold text-gray-700 placeholder-gray-300 uppercase tracking-widest w-full focus:outline-none focus:ring-0"
           type="text"
         />
       </div>
+    </Fragment>
     </Fragment>
   );
 };

@@ -9,112 +9,66 @@ const OrderMenu = (props) => {
   const [dropdown, setDropdown] = useState(false);
   return (
     <Fragment>
-      <div className="col-span-1 flex items-center">
-        <div className="flex flex-col space-y-4 md:flex-row md:justify-between md:items-center md:space-y-0 w-full">
-          {/* It's open the add order modal */}
-          <div
-            style={{ background: "#303031" }}
-            className="relative rounded-full text-gray-100 text-sm font-semibold uppercase"
-          >
+      <div className="col-span-1 flex flex-col md:flex-row md:items-center justify-between mb-8 space-y-4 md:space-y-0">
+        <div>
+          <h2 className="text-3xl font-bold text-gray-900 tracking-tighter uppercase italic">Order Management</h2>
+          <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mt-1">Track and manage customer orders</p>
+        </div>
+        
+        <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4">
+          
+          <div className="relative group/filter z-20">
             <div
               onClick={(e) => setDropdown(!dropdown)}
-              className="flex items-center cursor-pointer rounded-full overflow-hidden p-2 justify-center"
+              className="flex items-center cursor-pointer bg-white border border-gray-100 rounded-2xl px-6 py-4 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all"
             >
               <svg
-                className="w-6 h-6 text-gray-100 mr-2"
-                fill="currentColor"
-                viewBox="0 0 20 20"
+                className="w-4 h-4 text-gray-600 mr-2 group-hover/filter:text-emerald-600 transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
               </svg>
-              <span className="pr-2">Filter</span>
+              <span className="text-xs font-bold text-gray-600 uppercase tracking-widest group-hover/filter:text-gray-900">Filter Orders</span>
             </div>
+            
             <div
-              style={{ background: "#303031" }}
               className={`${
-                dropdown ? "" : "hidden"
-              } absolute top-0 left-0 mt-12 rounded-lg overflow-hidden w-full md:w-48 flex flex-col z-10`}
+                dropdown ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-4 pointer-events-none"
+              } absolute top-full right-0 mt-4 bg-white border border-gray-100 rounded-[2rem] shadow-2xl overflow-hidden w-64 flex flex-col transition-all duration-300`}
             >
-              <span
-                onClick={(e) =>
-                  filterOrder("All", data, dispatch, dropdown, setDropdown)
-                }
-                className="px-4 py-2 hover:bg-black text-center cursor-pointer"
-              >
-                All
-              </span>
-              <span
-                onClick={(e) =>
-                  filterOrder(
-                    "Not processed",
-                    data,
-                    dispatch,
-                    dropdown,
-                    setDropdown
-                  )
-                }
-                className="px-4 py-2 hover:bg-black text-center cursor-pointer"
-              >
-                Not processed
-              </span>
-              <span
-                onClick={(e) =>
-                  filterOrder(
-                    "Processing",
-                    data,
-                    dispatch,
-                    dropdown,
-                    setDropdown
-                  )
-                }
-                className="px-4 py-2 hover:bg-black text-center cursor-pointer"
-              >
-                Processing
-              </span>
-              <span
-                onClick={(e) =>
-                  filterOrder("Shipped", data, dispatch, dropdown, setDropdown)
-                }
-                className="px-4 py-2 hover:bg-black text-center cursor-pointer"
-              >
-                Shipped
-              </span>
-              <span
-                onClick={(e) =>
-                  filterOrder(
-                    "Delivered",
-                    data,
-                    dispatch,
-                    dropdown,
-                    setDropdown
-                  )
-                }
-                className="px-4 py-2 hover:bg-black text-center cursor-pointer"
-              >
-                Delivered
-              </span>
-              <span
-                onClick={(e) =>
-                  filterOrder(
-                    "Cancelled",
-                    data,
-                    dispatch,
-                    dropdown,
-                    setDropdown
-                  )
-                }
-                className="px-4 py-2 hover:bg-black text-center cursor-pointer"
-              >
-                Cancelled
-              </span>
+              {[
+                { label: "All Orders", value: "All" },
+                { label: "Pending Processing", value: "Not processed" },
+                { label: "Processing", value: "Processing" },
+                { label: "Shipped", value: "Shipped" },
+                { label: "Delivered", value: "Delivered" },
+                { label: "Cancelled", value: "Cancelled" }
+              ].map((item, index) => (
+                <span
+                  key={index}
+                  onClick={(e) => {
+                    filterOrder(item.value, data, dispatch, dropdown, setDropdown);
+                    setDropdown(false);
+                  }}
+                  className="px-8 py-4 hover:bg-emerald-50 hover:text-emerald-600 text-gray-600 text-xs font-bold uppercase tracking-widest cursor-pointer transition-colors border-b last:border-0 border-gray-50 flex items-center justify-between group/item"
+                >
+                  {item.label}
+                  {data.orderList?.every(o => o.status === item.value) && (
+                      <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                  )}
+                </span>
+              ))}
             </div>
           </div>
-          <div>
+
+          <div className="w-full md:w-auto">
             <SearchFilter />
           </div>
         </div>
-        {/*<AddCategoryModal/>*/}
+        
         <UpdateOrderModal />
       </div>
     </Fragment>

@@ -3,7 +3,7 @@ import { ProductContext } from "./index";
 import AddProductModal from "./AddProductModal";
 import EditProductModal from "./EditProductModal";
 
-const ProductMenu = (props) => {
+const ProductMenu = () => {
   const { dispatch } = useContext(ProductContext);
   return (
     <Fragment>

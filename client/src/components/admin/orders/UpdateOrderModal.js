@@ -6,7 +6,6 @@ const UpdateOrderModal = (props) => {
   const { data, dispatch } = useContext(OrderContext);
 
   const [status, setStatus] = useState("");
-
   const [oId, setOid] = useState("");
 
   useEffect(() => {
@@ -40,83 +39,63 @@ const UpdateOrderModal = (props) => {
 
   return (
     <Fragment>
-      {/* Black Overlay */}
-      <div
-        onClick={(e) => dispatch({ type: "updateOrderModalClose" })}
-        className={`${
-          data.updateOrderModal.modal ? "" : "hidden"
-        } fixed top-0 left-0 z-30 w-full h-full bg-black opacity-50`}
-      />
-      {/* End Black Overlay */}
-
-      {/* Modal Start */}
       <div
         className={`${
-          data.updateOrderModal.modal ? "" : "hidden"
-        } fixed inset-0 m-4  flex items-center z-30 justify-center`}
+          data.updateOrderModal.modal ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0 pointer-events-none"
+        } fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-500`}
       >
-        <div className="relative bg-white w-11/12 md:w-3/6 shadow-lg flex flex-col items-center space-y-4  overflow-y-auto px-4 py-4 md:px-8">
-          <div className="flex items-center justify-between w-full pt-4">
-            <span className="text-left font-semibold text-2xl tracking-wider">
-              Update Order
-            </span>
-            {/* Close Modal */}
-            <span
-              style={{ background: "#303031" }}
-              onClick={(e) => dispatch({ type: "updateOrderModalClose" })}
-              className="cursor-pointer text-gray-100 py-2 px-2 rounded-full"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </span>
-          </div>
-          <div className="flex flex-col space-y-1 w-full">
-            <label htmlFor="status">Order Status</label>
-            <select
-              value={status}
-              name="status"
-              onChange={(e) => setStatus(e.target.value)}
-              className="px-4 py-2 border focus:outline-none"
-              id="status"
-            >
-              <option name="status" value="Not processed">
-                Not processed
-              </option>
-              <option name="status" value="Processing">
-                Processing
-              </option>
-              <option name="status" value="Shipped">
-                Shipped
-              </option>
-              <option name="status" value="Delivered">
-                Delivered
-              </option>
-              <option name="status" value="Cancelled">
-                Cancelled
-              </option>
-            </select>
-          </div>
-          <div className="flex flex-col space-y-1 w-full pb-4 md:pb-6">
-            <button
-              style={{ background: "#303031" }}
-              onClick={(e) => submitForm()}
-              className="rounded-full bg-gray-800 text-gray-100 text-lg font-medium py-2"
-            >
-              Update category
-            </button>
-          </div>
+        <div 
+            onClick={(e) => dispatch({ type: "updateOrderModalClose" })}
+            className="absolute inset-0 bg-white/60 backdrop-blur-md transition-opacity"
+        ></div>
+
+        <div className="relative bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl flex flex-col border border-gray-100 overflow-hidden z-10">
+            
+            <div className="px-8 py-6 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
+                <div className="flex flex-col">
+                    <span className="text-xl font-bold text-gray-900 uppercase tracking-tighter italic">Update Order Status</span>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1">Modify lifecycle stage</span>
+                </div>
+                <button 
+                    onClick={(e) => dispatch({ type: "updateOrderModalClose" })}
+                    className="w-8 h-8 flex items-center justify-center rounded-full bg-white border border-gray-100 text-gray-400 hover:text-gray-900 hover:shadow-md transition-all"
+                >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+
+            <div className="p-8 flex flex-col space-y-6">
+                <div className="flex flex-col space-y-3">
+                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic">Select New Status</label>
+                    <div className="relative">
+                        <select
+                            value={status}
+                            onChange={(e) => setStatus(e.target.value)}
+                            className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 appearance-none italic uppercase tracking-widest cursor-pointer"
+                        >
+                            <option value="Not processed">Not processed</option>
+                            <option value="Processing">Processing</option>
+                            <option value="Shipped">Shipped</option>
+                            <option value="Delivered">Delivered</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                        <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="pt-4">
+                    <button
+                          onClick={(e) => submitForm()}
+                          className="w-full py-4 bg-gray-600 hover:bg-gray-700 text-white rounded-full font-bold text-sm transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-95 flex items-center justify-center space-x-2"
+                    >
+                        <span>Update Status</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    </button>
+                </div>
+            </div>
+            
         </div>
       </div>
     </Fragment>
