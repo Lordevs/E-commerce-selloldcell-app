@@ -381,28 +381,6 @@ const AddProductDetail = ({ categories }) => {
                 </div>
               </div>
 
-              <div className="flex space-x-1 py-4">
-                <div className="w-full flex flex-col space-y-1">
-                  <label htmlFor="deliveryCharges">Delivery Charges *</label>
-                  <input
-                    value={fData.pDeliveryCharges}
-                    onChange={(e) =>
-                      setFdata({
-                        ...fData,
-                        error: false,
-                        success: false,
-                        pDeliveryCharges: e.target.value,
-                      })
-                    }
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    className="px-4 py-2 border focus:outline-none"
-                    id="deliveryCharges"
-                    placeholder="Enter delivery charges"
-                  />
-                </div>
-              </div>
               <div className="flex flex-col space-y-1 w-full pb-4 md:pb-6 mt-4">
                 <button
                   style={{ background: "#303031" }}

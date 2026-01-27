@@ -10,7 +10,7 @@ import {
   ProductByCategory,
   CheckoutPage,
 } from "./shop";
-import { DashboardAdmin, Categories, Products, Orders } from "./admin";
+import { DashboardAdmin, Categories, Products, Orders, ShippingTax } from "./admin";
 import { UserProfile, UserOrders, SettingUser } from "./shop/dashboardUser";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -56,6 +56,11 @@ const Routes = (props) => {
           exact={true}
           path="/admin/dashboard/orders"
           component={Orders}
+        />
+        <AdminProtectedRoute
+          exact={true}
+          path="/admin/dashboard/shipping-tax"
+          component={ShippingTax}
         />
         {/* Admin Routes End */}
 

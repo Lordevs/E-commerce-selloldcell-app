@@ -22,6 +22,7 @@ export const pay = async (
   setState,
   totalCost,
   calculateDeliveryCharges,
+  settings,
   history
 ) => {
   if (!state.address) {
@@ -30,14 +31,23 @@ export const pay = async (
     setState({ ...state, error: "Please provide your phone number" });
   } else {
     dispatch({ type: "loading", payload: true });
-    
+
     const subtotal = totalCost();
-    const deliveryCharges = calculateDeliveryCharges(data.cartProduct);
-    const totalAmount = subtotal + deliveryCharges;
-    
+    const deliveryCharges = calculateDeliveryCharges(data.cartProduct, settings);
+
+    // Calculate taxes
+    let taxTotal = 0;
+    if (settings && settings.taxes) {
+      settings.taxes.forEach(tax => {
+        taxTotal += (subtotal * (tax.percentage / 100));
+      });
+    }
+
+    const totalAmount = subtotal + deliveryCharges + taxTotal;
+
     // Generate a unique transaction ID for cash on delivery
     const transactionId = "COD_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9);
-    
+
     let orderData = {
       allProduct: JSON.parse(localStorage.getItem("cart")),
       user: JSON.parse(localStorage.getItem("jwt")).user._id,
@@ -47,7 +57,7 @@ export const pay = async (
       phone: state.phone,
       paymentMethod: "Cash on Delivery",
     };
-    
+
     try {
       let responseData = await createOrder(orderData);
       if (responseData.success) {
