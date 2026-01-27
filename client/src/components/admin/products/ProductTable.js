@@ -87,10 +87,10 @@ const AllProduct = () => {
                             <tr key={key} className="group hover:bg-gray-50/30 transition-all">
                                 {/* Image */}
                                 <td className="px-6 py-4">
-                                    <div className="w-12 h-12 rounded-xl overflow-hidden border border-gray-100 shadow-sm shrink-0">
+                                    <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm shrink-0">
                                         <img 
                                             src={`${apiURL}/uploads/products/${item.pImages[0]}`} 
-                                            className="w-full h-full object-cover p-1 group-hover:scale-110 transition-transform duration-500" 
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
                                             alt={item.pName} 
                                         />
                                     </div>
