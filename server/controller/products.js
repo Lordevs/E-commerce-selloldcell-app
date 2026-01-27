@@ -42,8 +42,18 @@ class Product {
   }
 
   async postAddProduct(req, res) {
-    let { pName, pDescription, pPrice, pQuantity, pCategory, pOffer, pStatus, pDeliveryCharges } =
-      req.body;
+    let {
+      pName,
+      pDescription,
+      pPrice,
+      pQuantity,
+      pCategory,
+      pOffer,
+      pStatus,
+      pDeliveryCharges,
+      pSize,
+      pProperty,
+    } = req.body;
     let images = req.files;
     // Validation
     if (
@@ -53,7 +63,9 @@ class Product {
       !pQuantity |
       !pCategory |
       !pOffer |
-      !pStatus
+      !pStatus |
+      !pSize |
+      !pProperty
     ) {
       Product.deleteImages(images, "file");
       return res.json({ error: "All filled must be required" });
@@ -84,6 +96,8 @@ class Product {
           pCategory,
           pOffer,
           pStatus,
+          pSize,
+          pProperty,
           pDeliveryCharges: pDeliveryCharges || 0,
         });
         let save = await newProduct.save();
@@ -108,6 +122,8 @@ class Product {
       pStatus,
       pImages,
       pDeliveryCharges,
+      pSize,
+      pProperty,
     } = req.body;
     let editImages = req.files;
 
@@ -120,7 +136,9 @@ class Product {
       !pQuantity |
       !pCategory |
       !pOffer |
-      !pStatus
+      !pStatus |
+      !pSize |
+      !pProperty
     ) {
       return res.json({ error: "All filled must be required" });
     }
@@ -143,6 +161,8 @@ class Product {
         pCategory,
         pOffer,
         pStatus,
+        pSize,
+        pProperty,
         pDeliveryCharges: pDeliveryCharges || 0,
       };
       if (editImages.length == 2) {

@@ -54,6 +54,14 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    pSize: {
+      type: String,
+      required: true,
+    },
+    pProperty: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
