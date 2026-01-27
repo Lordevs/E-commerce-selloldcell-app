@@ -3,7 +3,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 import { LayoutContext } from "../index";
 
-const LoginSignup = (props) => {
+const LoginSignup = () => {
   const { data, dispatch } = useContext(LayoutContext);
 
   const [login, setLogin] = useState(true);
