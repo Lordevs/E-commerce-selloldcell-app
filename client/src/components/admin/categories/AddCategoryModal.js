@@ -116,7 +116,7 @@ const AddCategoryModal = (props) => {
 
           <div className="relative z-10 flex items-center justify-between px-10 py-8 border-b border-gray-50 bg-gray-50/30">
             <div>
-                 <h2 className="text-2xl font-black text-gray-900 tracking-tighter uppercase italic">Add <span className="text-indigo-600">Category</span></h2>
+                 <h2 className="text-2xl font-bold text-gray-900 tracking-tighter uppercase italic">Add <span className="text-indigo-600">Category</span></h2>
                  {/* <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1 italic">Define new classification parameters</p> */}
             </div>
             <button
@@ -129,12 +129,12 @@ const AddCategoryModal = (props) => {
 
           <div className="relative z-10 p-10 overflow-y-auto">
             {fData.error && (
-                <div className="mb-6 px-6 py-4 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl text-[10px] font-black uppercase tracking-widest italic animate-pulse">
+                <div className="mb-6 px-6 py-4 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl text-[10px] font-bold uppercase tracking-widest italic animate-pulse">
                     Status Alert: {fData.error}
                 </div>
             )}
             {fData.success && (
-                <div className="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl text-[10px] font-black uppercase tracking-widest italic">
+                <div className="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl text-[10px] font-bold uppercase tracking-widest italic">
                     Cluster Status: Successfully Deployed
                 </div>
             )}
@@ -160,7 +160,7 @@ const AddCategoryModal = (props) => {
                                     </button>
                                 </div>
                                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                                    <p className="text-white text-[10px] font-black uppercase tracking-widest">Drop new image to replace</p>
+                                    <p className="text-white text-[10px] font-bold uppercase tracking-widest">Drop new image to replace</p>
                                 </div>
                             </Fragment>
                         ) : (
@@ -169,7 +169,7 @@ const AddCategoryModal = (props) => {
                                     <svg className={`w-8 h-8 ${isDragging ? 'text-indigo-600' : 'text-gray-300'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                                 </div>
                                 <div className="text-center">
-                                    <p className="text-[10px] font-black text-gray-900 uppercase tracking-widest">Drag & Drop Image</p>
+                                    <p className="text-[10px] font-bold text-gray-900 uppercase tracking-widest">Drag & Drop Image</p>
                                     <p className="text-[9px] text-gray-400 font-bold uppercase tracking-widest mt-1 italic">or click to browse assets</p>
                                 </div>
                             </div>
@@ -185,23 +185,23 @@ const AddCategoryModal = (props) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="name">Title </label>
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="name">Title </label>
                         <input
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, cName: e.target.value })}
                             value={fData.cName}
                             placeholder="CLASSIFICATION NAME"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-black text-gray-900 uppercase tracking-tight"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-gray-600 uppercase tracking-tight"
                             type="text"
                             required
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="status">Status</label>
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="status">Status</label>
                         <div className="relative group/select">
                             <select
                                 onChange={(e) => setFdata({ ...fData, success: false, error: false, cStatus: e.target.value })}
                                 value={fData.cStatus}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-indigo-500/10 focus:bg-white focus:border-indigo-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 id="status"
                             >
                                 <option value="Active">Operational</option>
@@ -215,7 +215,7 @@ const AddCategoryModal = (props) => {
                 </div>
 
                 <div className="flex flex-col space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="description">Description</label>
+                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="description">Description</label>
                     <textarea
                         onChange={(e) => setFdata({ ...fData, success: false, error: false, cDescription: e.target.value })}
                         value={fData.cDescription}
@@ -230,7 +230,7 @@ const AddCategoryModal = (props) => {
                     <button
                         type="submit"
                         disabled={data.loading}
-                        className="w-full py-6 bg-gray-900 hover:bg-black text-white rounded-[2rem] font-black text-[11px] uppercase tracking-[0.4em] transition-all shadow-2xl shadow-gray-200 hover:-translate-y-2 active:scale-95 flex items-center justify-center space-x-4"
+                        className="w-full py-6 bg-gray-900 hover:bg-black text-white rounded-[2rem] font-bold text-[11px] uppercase tracking-[0.4em] transition-all shadow-2xl shadow-gray-200 hover:-translate-y-2 active:scale-95 flex items-center justify-center space-x-4"
                     >
                         {data.loading ? (
                              <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>

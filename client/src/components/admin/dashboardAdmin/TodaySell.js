@@ -46,10 +46,10 @@ const SellTable = () => {
           <table className="w-full text-left">
             <thead>
               <tr className="border-b border-gray-50 bg-white">
-                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Items & Quantity</th>
-                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Status</th>
-                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Destination</th>
-                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 text-right">Time</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 italic">Items & Quantity</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 italic">Status</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 italic">Destination</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 italic text-right">Time</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
@@ -76,7 +76,7 @@ const SellTable = () => {
         <div className="p-4 border-t border-gray-50 bg-white">
           <button
             onClick={(e) => history.push("/admin/dashboard/orders")}
-            className="w-full py-3 text-[10px] font-black text-center uppercase tracking-[0.3em] text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all rounded-lg"
+            className="w-full py-3 text-[10px] font-bold text-center uppercase tracking-[0.3em] text-gray-400 hover:text-gray-900 hover:bg-gray-50 transition-all rounded-lg"
           >
             Show All Logged Activities
           </button>
@@ -115,7 +115,7 @@ const TodayOrderRow = ({ order }) => {
             )}
           </div>
           <div className="flex flex-col">
-            <span className="text-xs font-bold text-gray-900 leading-none mb-1">
+            <span className="text-xs font-bold text-gray-600 leading-none mb-1">
                 {order.allProduct[0].id.pName} {order.allProduct.length > 1 ? ` & ${order.allProduct.length - 1} more` : ''}
             </span>
             <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">
@@ -125,7 +125,7 @@ const TodayOrderRow = ({ order }) => {
         </div>
       </td>
       <td className="px-6 py-4">
-        <span className={`px-2 py-1 text-[9px] font-black uppercase tracking-widest border rounded ${statusStyles[order.status] || statusStyles["Not processed"]}`}>
+        <span className={`px-2 py-1 text-[9px] font-bold uppercase tracking-widest border rounded ${statusStyles[order.status] || statusStyles["Not processed"]}`}>
             {order.status}
         </span>
       </td>
@@ -136,7 +136,7 @@ const TodayOrderRow = ({ order }) => {
       </td>
       <td className="px-6 py-4 text-right">
         <div className="flex flex-col items-end">
-          <span className="text-xs font-black text-gray-900 tabular-nums">{moment(order.createdAt).format("HH:mm")}</span>
+          <span className="text-xs font-bold text-gray-600 tabular-nums">{moment(order.createdAt).format("HH:mm")}</span>
           <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">{moment(order.createdAt).fromNow()}</span>
         </div>
       </td>

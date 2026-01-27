@@ -16,7 +16,7 @@ const AdminNavber = (props) => {
       <nav className="flex items-center justify-between px-8 py-4 bg-white transition-all duration-300">
         {/* Page Title */}
         <div className="flex items-center">
-            <h1 className="text-xl font-black text-gray-900 tracking-tighter uppercase italic">{history.location.pathname.split('/').pop()}</h1>  
+            <h1 className="text-xl font-bold text-gray-900 tracking-tighter uppercase italic">{history.location.pathname.split('/').pop()}</h1>  
         </div>
             
         {/* Right Actions */}

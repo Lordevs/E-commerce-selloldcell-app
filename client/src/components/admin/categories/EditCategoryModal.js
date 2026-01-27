@@ -102,7 +102,7 @@ const EditCategoryModal = (props) => {
 
           <div className="relative z-10 flex items-center justify-between px-10 py-8 border-b border-gray-50 bg-gray-50/30">
             <div>
-                 <h2 className="text-2xl font-black text-gray-900 tracking-tighter uppercase italic text-emerald-600">Update <span className="text-gray-900">Category</span></h2>
+                 <h2 className="text-2xl font-bold text-gray-900 tracking-tighter uppercase italic text-emerald-600">Update <span className="text-gray-900">Category</span></h2>
                  {/* <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1 italic">Modify existing classification parameters</p> */}
             </div>
             <button
@@ -156,24 +156,24 @@ const EditCategoryModal = (props) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="name">Title</label>
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="name">Title</label>
                         <input
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="CLASSIFICATION NAME"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 uppercase tracking-tight"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 uppercase tracking-tight"
                             type="text"
                             required
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="status">Status</label>
+                        <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="status">Status</label>
                         <div className="relative group/select">
                             <select
                                 value={status}
                                 name="status"
                                 onChange={(e) => setStatus(e.target.value)}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 id="status"
                             >
                                 <option value="Active">Operational Status</option>
@@ -187,7 +187,7 @@ const EditCategoryModal = (props) => {
                 </div>
 
                 <div className="flex flex-col space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="description">Description</label>
+                    <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="description">Description</label>
                     <textarea
                         value={des}
                         onChange={(e) => setDes(e.target.value)}
@@ -202,7 +202,7 @@ const EditCategoryModal = (props) => {
                     <button
                         type="submit"
                         disabled={data.loading}
-                        className="w-full py-6 bg-gray-900 hover:bg-black text-white rounded-[2rem] font-black text-[11px] uppercase tracking-[0.4em] transition-all shadow-xl shadow-gray-200 hover:-translate-y-2 active:scale-95 flex items-center justify-center space-x-4"
+                        className="w-full py-6 bg-gray-900 hover:bg-black text-white rounded-[2rem] font-bold text-[11px] uppercase tracking-[0.4em] transition-all shadow-xl shadow-gray-200 hover:-translate-y-2 active:scale-95 flex items-center justify-center space-x-4"
                     >
                         {data.loading ? (
                             <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>

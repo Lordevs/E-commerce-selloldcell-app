@@ -117,7 +117,7 @@ const AdminSidebar = (props) => {
                   {user.name ? user.name[0] : 'A'}
                 </div>
                 <div className="flex-1 overflow-hidden">
-                    <p className="text-[11px] font-black text-gray-900 truncate uppercase tracking-tighter leading-tight">
+                    <p className="text-[11px] font-bold text-gray-600 truncate uppercase tracking-tighter leading-tight">
                       {user.name}
                     </p>
                     <p className="text-[10px] text-gray-500 font-bold truncate lowercase leading-tight">

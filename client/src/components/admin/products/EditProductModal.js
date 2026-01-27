@@ -243,7 +243,7 @@ const EditProductModal = (props) => {
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, pName: e.target.value })}
                             value={fData.pName}
                             placeholder="ASSET IDENTIFIER"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 uppercase tracking-tight"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 uppercase tracking-tight"
                             type="text"
                             required
                         />
@@ -254,7 +254,7 @@ const EditProductModal = (props) => {
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, pPrice: e.target.value })}
                             value={fData.pPrice}
                             placeholder="0.00"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 uppercase tracking-tight"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 uppercase tracking-tight"
                             type="number"
                             required
                         />
@@ -265,7 +265,7 @@ const EditProductModal = (props) => {
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, pOffer: e.target.value })}
                             value={fData.pOffer}
                             placeholder="0"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 uppercase tracking-tight text-rose-500"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 uppercase tracking-tight text-rose-500"
                             type="number"
                         />
                     </div>
@@ -278,7 +278,7 @@ const EditProductModal = (props) => {
                             <select
                                 onChange={(e) => setFdata({ ...fData, success: false, error: false, pCategory: e.target.value })}
                                 value={fData.pCategory}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 required
                             >
                                 <option disabled value="">SELECT CATEGORY</option>
@@ -297,7 +297,7 @@ const EditProductModal = (props) => {
                             <select
                                 onChange={(e) => setFdata({ ...fData, pSize: e.target.value })}
                                 value={fData.pSize}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 required
                             >
                                 <option value="" disabled>SELECT SIZE</option>
@@ -317,7 +317,7 @@ const EditProductModal = (props) => {
                                 onChange={(e) => setCustomSize(e.target.value)}
                                 placeholder="Enter custom size (ml)"
                                 type="number"
-                                className="mt-3 px-8 py-5 bg-gray-50 border-2 border-emerald-400 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-600 transition-all font-bold text-gray-900 uppercase tracking-tight"
+                                className="mt-3 px-8 py-5 bg-gray-50 border-2 border-emerald-400 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-600 transition-all font-bold text-gray-600 uppercase tracking-tight"
                                 required
                             />
                         )}
@@ -328,7 +328,7 @@ const EditProductModal = (props) => {
                             <select
                                 onChange={(e) => setFdata({ ...fData, pProperty: e.target.value })}
                                 value={fData.pProperty}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 required
                             >
                                 <option value="" disabled>SELECT PROPERTY</option>
@@ -350,7 +350,7 @@ const EditProductModal = (props) => {
                             <select
                                 onChange={(e) => setFdata({ ...fData, pStatus: e.target.value })}
                                 value={fData.pStatus}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 required
                             >
                                 <option value="Active">OPERATIONAL</option>
@@ -380,7 +380,7 @@ const EditProductModal = (props) => {
                             onChange={(e) => setFdata({ ...fData, pQuantity: e.target.value })}
                             value={fData.pQuantity}
                             placeholder="0"
-                            className="px-8 py-10 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-4xl text-gray-900 text-center tracking-tighter"
+                            className="px-8 py-10 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-4xl text-gray-600 text-center tracking-tighter"
                             type="number"
                             required
                         />

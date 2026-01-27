@@ -60,85 +60,106 @@ const AllCategory = () => {
 
   return (
     <Fragment>
-      <div className="bg-white border-t border-gray-100 min-h-full">
-        <div className="flex items-center justify-between py-6 mb-4">
-            <h3 className="text-[11px] font-black text-gray-600 uppercase tracking-[0.3em] font-mono">
-                {categories?.length || 0} {categories?.length === 1 ? 'Category' : 'Categories'} IN PRODUCTION
-            </h3>
+      <div className="bg-white border text-left border-gray-100 min-h-full rounded-[3rem] shadow-2xl overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gray-50 rounded-full blur-3xl -mr-48 -mt-48 opacity-50 pointer-events-none"></div>
+        
+        <div className="overflow-x-auto p-8 text-left">
+             <table className="w-full text-left border-collapse">
+                <thead>
+                    <tr className="text-[10px] text-gray-600 font-bold uppercase tracking-widest italic border-b border-gray-100">
+                        <th className="px-6 py-6 font-medium text-left">Category Details</th>
+                        <th className="px-6 py-6 font-medium text-center">Status</th>
+                        <th className="px-6 py-6 font-medium text-center">Created At</th>
+                        <th className="px-6 py-6 font-medium text-center">Last Updated</th>
+                        <th className="px-6 py-6 font-medium text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-50">
+                    {categories && categories.length > 0 ? (
+                      categories.map((item, key) => (
+                        <tr key={key} className="hover:bg-gray-50/80 transition-colors group">
+                            {/* Details */}
+                            <td className="px-6 py-6 align-top text-left">
+                                <div className="flex items-center space-x-4">
+                                    <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm shrink-0">
+                                        <img
+                                          className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
+                                          src={`${apiURL}/uploads/categories/${item.cImage}`}
+                                          alt=""
+                                        />
+                                    </div>
+                                    <div className="flex flex-col space-y-1">
+                                        <span className="text-xs font-bold text-gray-800 uppercase tracking-tight">{item.cName}</span>
+                                        <span className="text-[10px] text-gray-600 font-medium leading-relaxed line-clamp-1 max-w-xs">{item.cDescription}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            
+                            {/* Status */}
+                            <td className="px-6 py-6 align-top text-center">
+                                {item.cStatus === "Active" ? (
+                                  <span className="inline-flex items-center px-3 py-1 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[9px] font-bold uppercase tracking-widest">
+                                     Online
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center px-3 py-1 bg-rose-50 text-rose-500 border border-rose-100 rounded-lg text-[9px] font-bold uppercase tracking-widest opacity-60">
+                                     Offline
+                                  </span>
+                                )}
+                            </td>
+
+                            {/* Created At */}
+                            <td className="px-6 py-6 align-top text-center">
+                                <div className="flex flex-col">
+                                    <span className="text-[10px] font-bold text-gray-800 uppercase tracking-tight">{moment(item.createdAt).format("MMM Do YY")}</span>
+                                </div>
+                            </td>
+
+                            {/* Timestamp */}
+                            <td className="px-6 py-6 align-top text-center">
+                                <div className="flex flex-col">
+                                    <span className="text-[10px] font-bold text-gray-800 uppercase tracking-tight">{moment(item.updatedAt).format("MMM Do YY")}</span>
+                                    <span className="text-[9px] font-medium text-gray-600 mt-0.5">{moment(item.updatedAt).fromNow()}</span>
+                                </div>
+                            </td>
+
+                            {/* Actions */}
+                            <td className="px-6 py-6 align-top text-center">
+                                <div className="flex items-center justify-center space-x-2">
+                                    <button
+                                        onClick={() => editCategory(item._id, true, item.cDescription, item.cStatus, item.cImage, item.cName)}
+                                        className="w-8 h-8 flex items-center justify-center rounded-xl bg-rose-50 text-rose-400 hover:bg-rose-500 hover:text-white transition-all transform active:scale-95"
+                                        title="Edit Category"
+                                    >
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                                    </button>
+                                    <button
+                                        onClick={() => deleteCategoryReq(item._id)}
+                                        className="w-8 h-8 flex items-center justify-center rounded-xl bg-rose-50 text-rose-400 hover:bg-rose-500 hover:text-white transition-all transform active:scale-95"
+                                        title="Delete Category"
+                                    >
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                          <td colSpan="5" className="px-6 py-20 text-center">
+                              <div className="flex flex-col items-center justify-center opacity-30">
+                                  <p className="text-[11px] font-bold uppercase tracking-[0.4em]">No Categories Found</p>
+                              </div>
+                          </td>
+                      </tr>
+                    )}
+                </tbody>
+             </table>
         </div>
 
-        <div className="flex flex-col">
-            {/* Header */}
-            <div className="grid grid-cols-12 px-8 py-4 bg-gray-50/50 border-b border-gray-100">
-                <div className="col-span-4 text-[10px] font-black text-gray-700 uppercase tracking-widest">Details</div>
-                <div className="col-span-3 text-[10px] font-black text-gray-700 uppercase tracking-widest">Status</div>
-                <div className="col-span-3 text-[10px] font-black text-gray-700 uppercase tracking-widest">Last Updated</div>
-                <div className="col-span-2 text-[10px] font-black text-gray-700 uppercase tracking-widest text-right px-2">Action</div>
-            </div>
-
-            {categories && categories.length > 0 ? (
-              categories.map((item, key) => (
-                <div key={key} className="grid grid-cols-12 px-8 py-8 border-b border-gray-50 hover:bg-gray-50/20 transition-all items-center group">
-                    {/* Details */}
-                    <div className="col-span-4 flex items-center space-x-6">
-                        <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 shadow-sm shrink-0">
-                            <img
-                              className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
-                              src={`${apiURL}/uploads/categories/${item.cImage}`}
-                              alt=""
-                            />
-                        </div>
-                        <div className="flex flex-col space-y-1">
-                            <span className="text-sm font-black text-gray-900 tracking-tight uppercase italic">{item.cName}</span>
-                            <span className="text-[11px] text-gray-400 font-medium leading-relaxed italic line-clamp-1 max-w-xs">{item.cDescription}</span>
-                        </div>
-                    </div>
-                    
-                    {/* Status */}
-                    <div className="col-span-3">
-                        {item.cStatus === "Active" ? (
-                          <div className="inline-flex items-center space-x-2 px-3 py-1 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[9px] font-black uppercase tracking-widest">
-                             <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
-                             <span>Online</span>
-                          </div>
-                        ) : (
-                          <div className="inline-flex items-center space-x-2 px-3 py-1 bg-rose-50 text-rose-500 border border-rose-100 rounded-lg text-[9px] font-black uppercase tracking-widest opacity-60">
-                             <div className="w-1.5 h-1.5 bg-rose-500 rounded-full"></div>
-                             <span>Offline</span>
-                          </div>
-                        )}
-                    </div>
-
-                    {/* Timestamp */}
-                    <div className="col-span-3 flex flex-col">
-                        <span className="text-xs font-black text-gray-900 tabular-nums lowercase italic">{moment(item.updatedAt).format("DD MMM, YYYY")}</span>
-                        <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest mt-0.5">{moment(item.updatedAt).fromNow()}</span>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="col-span-2 flex items-center justify-end space-x-2">
-                        <button
-                            onClick={() => editCategory(item._id, true, item.cDescription, item.cStatus, item.cImage, item.cName)}
-                            className="w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 text-gray-400 hover:bg-gray-900 hover:text-white transition-all transform active:scale-90"
-                            title="Edit Master Matrix"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-                        </button>
-                        <button
-                            onClick={() => deleteCategoryReq(item._id)}
-                            className="w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 text-gray-400 hover:bg-rose-500 hover:text-white transition-all transform active:scale-90"
-                            title="Purge Classification"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                        </button>
-                    </div>
-                </div>
-              ))
-            ) : (
-              <div className="py-32 flex flex-col items-center justify-center opacity-30">
-                  <p className="text-[11px] font-black uppercase tracking-[0.4em]">Zero Classifications Found</p>
-              </div>
-            )}
+        <div className="bg-gray-50 px-8 py-5 border-t border-gray-100 flex justify-between items-center">
+            <span className="text-[10px] text-gray-600 font-bold uppercase tracking-widest italic">Total Records</span>
+            <span className="text-sm font-bold text-gray-600">{categories ? categories.length : 0} categories</span>
         </div>
       </div>
     </Fragment>

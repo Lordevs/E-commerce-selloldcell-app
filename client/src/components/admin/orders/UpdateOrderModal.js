@@ -71,7 +71,7 @@ const UpdateOrderModal = (props) => {
                         <select
                             value={status}
                             onChange={(e) => setStatus(e.target.value)}
-                            className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 appearance-none italic uppercase tracking-widest cursor-pointer"
+                            className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest cursor-pointer"
                         >
                             <option value="Not processed">Not processed</option>
                             <option value="Processing">Processing</option>

@@ -205,6 +205,10 @@ const AllProduct = (props) => {
             </table>
         </div>
       </div>
+      <div className="bg-gray-50 px-8 py-5 border-t border-gray-100 flex justify-between items-center">
+            <span className="text-[10px] text-gray-600 font-bold uppercase tracking-widest italic">Total Records</span>
+            <span className="text-sm font-bold text-gray-600">{products ? products.length : 0} products</span>
+        </div>
     </Fragment>
   );
 };
