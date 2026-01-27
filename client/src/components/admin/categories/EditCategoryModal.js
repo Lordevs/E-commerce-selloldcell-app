@@ -36,7 +36,8 @@ const EditCategoryModal = (props) => {
     }
   };
 
-  const submitForm = async () => {
+  const submitForm = async (e) => {
+    e.preventDefault();
     dispatch({ type: "loading", payload: true });
     let edit = await editCategory(cId, des, status, image, name);
     if (edit.error) {
@@ -95,14 +96,14 @@ const EditCategoryModal = (props) => {
           data.editCategoryModal.modal ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0 pointer-events-none"
         } fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-500`}
       >
-        <div className="relative bg-white w-full max-w-xl rounded-[3rem] shadow-2xl overflow-hidden flex flex-col border border-gray-100 max-h-[95vh]">
+        <div className="relative bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl overflow-hidden flex flex-col border border-gray-100 max-h-[95vh]">
           
-          <div className="absolute top-0 right-0 w-48 h-48 bg-emerald-50 rounded-full blur-3xl -mr-24 -mt-24 opacity-50"></div>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-50 rounded-full blur-3xl -mr-32 -mt-32 opacity-50"></div>
 
           <div className="relative z-10 flex items-center justify-between px-10 py-8 border-b border-gray-50 bg-gray-50/30">
             <div>
-                 <h2 className="text-2xl font-black text-gray-900 tracking-tighter uppercase italic">Update <span className="text-emerald-600">Category</span></h2>
-                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1 italic">Modify existing classification parameters</p>
+                 <h2 className="text-2xl font-black text-gray-900 tracking-tighter uppercase italic text-emerald-600">Update <span className="text-gray-900">Category</span></h2>
+                 {/* <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1 italic">Modify existing classification parameters</p> */}
             </div>
             <button
                 onClick={(e) => dispatch({ type: "editCategoryModalClose" })}
@@ -113,7 +114,7 @@ const EditCategoryModal = (props) => {
           </div>
 
           <div className="relative z-10 p-10 overflow-y-auto">
-            <div className="space-y-8">
+            <form className="space-y-8" onSubmit={submitForm}>
                 
                 {/* Image Section */}
                 <div className="flex flex-col space-y-4 items-center">
@@ -125,9 +126,10 @@ const EditCategoryModal = (props) => {
                     >
                         {preview ? (
                             <Fragment>
-                                <img src={preview} className="w-full h-full object-cover" alt="Preview" />
+                                <img src={preview} className="w-full h-full object-contain" alt="Preview" />
                                 <div className="absolute top-4 right-4 z-20">
                                     <button 
+                                        type="button"
                                         onClick={removeSelectedImage}
                                         className="w-10 h-10 bg-white/90 backdrop-blur shadow-lg rounded-xl flex items-center justify-center text-rose-500 hover:bg-rose-500 hover:text-white transition-all transform hover:rotate-90 active:scale-90"
                                         title="Clear Selection"
@@ -137,7 +139,7 @@ const EditCategoryModal = (props) => {
                                 </div>
                             </Fragment>
                         ) : existingImage ? (
-                            <img src={`${apiURL}/uploads/categories/${existingImage}`} className="w-full h-full object-cover" alt="Current" />
+                            <img src={`${apiURL}/uploads/categories/${existingImage}`} className="w-full h-full object-contain" alt="Current" />
                         ) : (
                             <div className="flex flex-col items-center space-y-3 pointer-events-none opacity-20">
                                 <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
@@ -150,34 +152,34 @@ const EditCategoryModal = (props) => {
                             type="file"
                         />
                     </div>
-                    <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest italic text-center">Visual Asset Configuration</span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-4 italic" htmlFor="name">Title</label>
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="name">Title</label>
                         <input
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="CLASSIFICATION NAME"
                             className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 uppercase tracking-tight"
                             type="text"
+                            required
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-4 italic" htmlFor="status">Status</label>
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="status">Status</label>
                         <div className="relative group/select">
                             <select
                                 value={status}
                                 name="status"
                                 onChange={(e) => setStatus(e.target.value)}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 id="status"
                             >
                                 <option value="Active">Operational Status</option>
                                 <option value="Disabled">Deactivated Status</option>
                             </select>
-                            <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-hover/select:text-emerald-600 transition-colors">
+                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-hover/select:text-emerald-600 transition-colors">
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
                             </div>
                         </div>
@@ -185,7 +187,7 @@ const EditCategoryModal = (props) => {
                 </div>
 
                 <div className="flex flex-col space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-4 italic" htmlFor="description">Description</label>
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="description">Description</label>
                     <textarea
                         value={des}
                         onChange={(e) => setDes(e.target.value)}
@@ -198,7 +200,7 @@ const EditCategoryModal = (props) => {
                 
                 <div className="pt-2">
                     <button
-                        onClick={(e) => submitForm()}
+                        type="submit"
                         disabled={data.loading}
                         className="w-full py-6 bg-gray-900 hover:bg-black text-white rounded-[2rem] font-black text-[11px] uppercase tracking-[0.4em] transition-all shadow-xl shadow-gray-200 hover:-translate-y-2 active:scale-95 flex items-center justify-center space-x-4"
                     >
@@ -212,7 +214,7 @@ const EditCategoryModal = (props) => {
                         )}
                     </button>
                 </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import moment from "moment";
 
 const apiURL = process.env.REACT_APP_API_URL;
 
-const AllCategory = (props) => {
+const AllCategory = () => {
   const { data, dispatch } = useContext(CategoryContext);
   const { categories, loading } = data;
 
@@ -62,7 +62,7 @@ const AllCategory = (props) => {
     <Fragment>
       <div className="bg-white border-t border-gray-100 min-h-full">
         <div className="flex items-center justify-between py-6 mb-4">
-            <h3 className="text-[11px] font-black text-gray-400 uppercase tracking-[0.3em] font-mono">
+            <h3 className="text-[11px] font-black text-gray-600 uppercase tracking-[0.3em] font-mono">
                 {categories?.length || 0} {categories?.length === 1 ? 'Category' : 'Categories'} IN PRODUCTION
             </h3>
         </div>
@@ -70,10 +70,10 @@ const AllCategory = (props) => {
         <div className="flex flex-col">
             {/* Header */}
             <div className="grid grid-cols-12 px-8 py-4 bg-gray-50/50 border-b border-gray-100">
-                <div className="col-span-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Classification Details</div>
-                <div className="col-span-3 text-[10px] font-black text-gray-400 uppercase tracking-widest">Status</div>
-                <div className="col-span-3 text-[10px] font-black text-gray-400 uppercase tracking-widest">Last Updated</div>
-                <div className="col-span-2 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right px-2">Action</div>
+                <div className="col-span-4 text-[10px] font-black text-gray-700 uppercase tracking-widest">Details</div>
+                <div className="col-span-3 text-[10px] font-black text-gray-700 uppercase tracking-widest">Status</div>
+                <div className="col-span-3 text-[10px] font-black text-gray-700 uppercase tracking-widest">Last Updated</div>
+                <div className="col-span-2 text-[10px] font-black text-gray-700 uppercase tracking-widest text-right px-2">Action</div>
             </div>
 
             {categories && categories.length > 0 ? (

@@ -11,7 +11,7 @@ const CategoryMenu = (props) => {
       <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
         <div>
           <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase italic">Inventory Categories</h2>
-            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Manage and organize your product catalog</p>
+            <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mt-1">Manage and organize your product catalog</p>
         </div>
         <button
             onClick={() => dispatch({ type: "addCategoryModal", payload: true })}

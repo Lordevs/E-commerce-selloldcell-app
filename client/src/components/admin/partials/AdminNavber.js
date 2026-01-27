@@ -15,10 +15,8 @@ const AdminNavber = (props) => {
     <Fragment>
       <nav className="flex items-center justify-between px-8 py-4 bg-white transition-all duration-300">
         {/* Page Title */}
-        <div className="flex items-center space-x-4">
-            <h1 className="text-xl font-black text-gray-900 tracking-tighter uppercase italic">Control Panel</h1>
-            <div className="h-6 w-[1px] bg-gray-100"></div>
-            <span className="text-gray-400 text-sm font-bold uppercase tracking-widest">{history.location.pathname.split('/').pop()}</span>
+        <div className="flex items-center">
+            <h1 className="text-xl font-black text-gray-900 tracking-tighter uppercase italic">{history.location.pathname.split('/').pop()}</h1>  
         </div>
             
         {/* Right Actions */}

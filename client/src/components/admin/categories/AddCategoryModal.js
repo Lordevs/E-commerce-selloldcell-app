@@ -149,7 +149,7 @@ const AddCategoryModal = (props) => {
                     >
                         {preview ? (
                             <Fragment>
-                                <img src={preview} className="w-full h-full object-cover" alt="Preview" />
+                                <img src={preview} className="w-full h-full object-contain" alt="Preview" />
                                 <div className="absolute top-4 right-4 z-20">
                                     <button 
                                         onClick={removeImage}

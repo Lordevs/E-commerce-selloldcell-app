@@ -1,5 +1,8 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
+import axios from "axios";
+
+const apiURL = process.env.REACT_APP_API_URL;
 
 const SidebarItem = ({ icon, label, active, onClick }) => {
     return (
@@ -22,6 +25,35 @@ const SidebarItem = ({ icon, label, active, onClick }) => {
 const AdminSidebar = (props) => {
   const location = useLocation();
   const history = useHistory();
+  const [user, setUser] = useState({
+    name: "Administrator",
+    email: "admin@lordevs.com",
+    role: "Admin"
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+        const jwt = localStorage.getItem("jwt") ? JSON.parse(localStorage.getItem("jwt")) : null;
+        const uId = jwt?.user?._id;
+        
+        if (uId) {
+            try {
+                // Direct axios call to ensure no import/path issues
+                const res = await axios.post(`${apiURL}/api/user/signle-user`, { uId });
+                if (res.data && res.data.User) {
+                    setUser({
+                        name: res.data.User.name,
+                        email: res.data.User.email,
+                        role: res.data.User.userRole === 1 ? "Administrator" : "User"
+                    });
+                }
+            } catch (error) {
+                console.log("Error fetching user data:", error);
+            }
+        }
+    };
+    fetchData();
+  }, []);
 
   return (
     <Fragment>
@@ -82,11 +114,15 @@ const AdminSidebar = (props) => {
           <div className="mt-auto p-4 border-t border-gray-100 bg-gray-50">
              <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center font-bold text-white shadow-md">
-                  A
+                  {user.name ? user.name[0] : 'A'}
                 </div>
                 <div className="flex-1 overflow-hidden">
-                    <p className="text-xs font-bold text-gray-900 truncate">Administrator</p>
-                    <p className="text-[10px] text-gray-400 font-bold uppercase italic tracking-tighter">Master Control</p>
+                    <p className="text-[11px] font-black text-gray-900 truncate uppercase tracking-tighter leading-tight">
+                      {user.name}
+                    </p>
+                    <p className="text-[10px] text-gray-500 font-bold truncate lowercase leading-tight">
+                      {user.email}
+                    </p>
                 </div>
              </div>
           </div>
