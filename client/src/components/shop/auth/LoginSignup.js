@@ -43,9 +43,9 @@ const LoginSignup = (props) => {
           {login ? <Login /> : <Signup />}
           
           <div className="flex items-center justify-between space-x-4">
-            <span className="h-px bg-gray-200 w-full" />
-            <span className="text-gray-400 font-medium text-sm whitespace-nowrap">or continue with</span>
-            <span className="h-px bg-gray-200 w-full" />
+            <div className="flex-1 h-px bg-gray-200" />
+            <div className="text-gray-600 font-bold text-xs uppercase tracking-widest">OR</div>
+            <div className="flex-1 h-px bg-gray-200" />
           </div>
 
           <div
