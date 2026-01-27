@@ -37,13 +37,14 @@ const AllCategory = (props) => {
     }
   };
 
-  const editCategory = (cId, type, des, status) => {
+  const editCategory = (cId, type, des, status, cImage) => {
     if (type) {
       dispatch({
         type: "editCategoryModalOpen",
         cId: cId,
         des: des,
         status: status,
+        cImage: cImage,
       });
     }
   };
@@ -69,9 +70,9 @@ const AllCategory = (props) => {
             {/* Header */}
             <div className="grid grid-cols-12 px-8 py-4 bg-gray-50/50 border-b border-gray-100">
                 <div className="col-span-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Classification Details</div>
-                <div className="col-span-3 text-[10px] font-black text-gray-400 uppercase tracking-widest">Operational Status</div>
-                <div className="col-span-3 text-[10px] font-black text-gray-400 uppercase tracking-widest">Master Synchronized</div>
-                <div className="col-span-2 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right px-2">Contro</div>
+                <div className="col-span-3 text-[10px] font-black text-gray-400 uppercase tracking-widest">Status</div>
+                <div className="col-span-3 text-[10px] font-black text-gray-400 uppercase tracking-widest">Last Updated</div>
+                <div className="col-span-2 text-[10px] font-black text-gray-400 uppercase tracking-widest text-right px-2">Action</div>
             </div>
 
             {categories && categories.length > 0 ? (
@@ -116,7 +117,7 @@ const AllCategory = (props) => {
                     {/* Actions */}
                     <div className="col-span-2 flex items-center justify-end space-x-2">
                         <button
-                            onClick={() => editCategory(item._id, true, item.cDescription, item.cStatus)}
+                            onClick={() => editCategory(item._id, true, item.cDescription, item.cStatus, item.cImage)}
                             className="w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 text-gray-400 hover:bg-gray-900 hover:text-white transition-all transform active:scale-90"
                             title="Edit Master Matrix"
                         >
