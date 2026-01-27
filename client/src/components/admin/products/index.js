@@ -9,7 +9,7 @@ export const ProductContext = createContext();
 
 const ProductComponent = () => {
   return (
-    <div className="flex flex-col space-y-8 bg-white min-h-screen">
+    <div className="flex flex-col bg-white min-h-screen">
       <ProductMenu />
       <div className="bg-white rounded-[3rem] border border-gray-100 shadow-2xl shadow-gray-200/50 overflow-hidden">
         <ProductTable />

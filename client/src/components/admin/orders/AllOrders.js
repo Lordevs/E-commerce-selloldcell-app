@@ -33,7 +33,7 @@ const AllOrders = (props) => {
         <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
                 <thead>
-                    <tr className="text-[10px] text-gray-600 font-bold uppercase tracking-widest italic border-b border-gray-100">
+                    <tr className="text-[10px] text-gray-600 font-semibold uppercase tracking-widest italic border-b border-gray-100">
                         <th className="px-6 py-6 font-medium">Product Details</th>
                         <th className="px-6 py-6 font-medium text-center">Status</th>
                         <th className="px-6 py-6 font-medium text-center">Amount</th>
@@ -61,7 +61,7 @@ const AllOrders = (props) => {
                                     <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4">
                                         <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
                                     </div>
-                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-widest italic">No orders found</span>
+                                    <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest italic">No orders found</span>
                                 </div>
                             </td>
                         </tr>
@@ -123,8 +123,8 @@ const OrderRow = ({ order, editOrder }) => {
                                 alt="prod"
                             />
                             <div className="flex flex-col pt-0.5">
-                                <span className="text-[11px] font-bold text-gray-700 uppercase tracking-tight line-clamp-1 max-w-[140px]">{product.id.pName}</span>
-                                <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">{product.quantitiy} Units</span>
+                                <span className="text-[11px] font-semibold text-gray-700 uppercase tracking-tight line-clamp-1 max-w-[140px]">{product.id.pName}</span>
+                                <span className="text-[9px] font-medium text-gray-400 uppercase tracking-widest">{product.quantitiy} Units</span>
                             </div>
                         </div>
                     );
@@ -135,7 +135,7 @@ const OrderRow = ({ order, editOrder }) => {
 
       {/* Status */}
       <td className="px-6 py-6 align-top text-center">
-        <span className={`inline-block px-3 py-1.5 rounded-lg text-[9px] font-bold uppercase tracking-widest border ${getStatusColor(order.status)}`}>
+        <span className={`inline-block px-3 py-1.5 rounded-lg text-[9px] font-semibold uppercase tracking-widest border ${getStatusColor(order.status)}`}>
             {order.status}
         </span>
       </td>
@@ -143,9 +143,9 @@ const OrderRow = ({ order, editOrder }) => {
       {/* Amount + Delivery */}
       <td className="px-6 py-6 align-top text-center">
         <div className="flex flex-col items-center">
-            <span className="text-sm font-bold text-gray-800">${order.amount}.00</span>
+            <span className="text-sm font-semibold text-gray-800">${order.amount}.00</span>
             {totalDelivery > 0 && (
-                <span className="text-[9px] font-bold text-emerald-600 mt-1">+${totalDelivery} Ship</span>
+                <span className="text-[9px] font-semibold text-emerald-600 mt-1">+${totalDelivery} Ship</span>
             )}
         </div>
       </td>
@@ -153,7 +153,7 @@ const OrderRow = ({ order, editOrder }) => {
       {/* Transaction Info */}
       <td className="px-6 py-6 align-top text-center">
         <div className="flex flex-col items-center space-y-1">
-            <span className="px-2 py-1 rounded bg-gray-100 text-[8px] font-bold text-gray-500 uppercase tracking-widest">
+            <span className="px-2 py-1 rounded bg-gray-100 text-[8px] font-medium text-gray-500 uppercase tracking-widest">
                 {order.paymentMethod || "COD"}
             </span>
             <span className="text-[9px] font-mono text-gray-400 max-w-[100px] truncate" title={order.transactionId}>
@@ -165,7 +165,7 @@ const OrderRow = ({ order, editOrder }) => {
       {/* Customer Info */}
       <td className="px-6 py-6 align-top text-center">
         <div className="flex flex-col">
-            <span className="text-[11px] font-bold text-gray-700">{order.user?.name || "Guest"}</span>
+            <span className="text-[11px] font-semibold text-gray-700">{order.user?.name || "Guest"}</span>
             <span className="text-[9px] font-medium text-gray-400 mt-0.5">{order.user?.email}</span>
         </div>
       </td>
@@ -173,7 +173,7 @@ const OrderRow = ({ order, editOrder }) => {
       {/* Contact */}
       <td className="px-6 py-6 align-top text-center">
         <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-gray-600">{order.phone || "N/A"}</span>
+            <span className="text-[10px] font-medium text-gray-600">{order.phone || "N/A"}</span>
         </div>
       </td>
 
@@ -187,7 +187,7 @@ const OrderRow = ({ order, editOrder }) => {
       {/* Dates */}
       <td className="px-6 py-6 align-top text-center">
         <div className="flex flex-col items-center">
-            <span className="text-[10px] font-bold text-gray-700 uppercase">{moment(order.createdAt).format("MMM Do")}</span>
+            <span className="text-[10px] font-semibold text-gray-700 uppercase">{moment(order.createdAt).format("MMM Do")}</span>
             <span className="text-[9px] text-gray-400 mt-0.5">{moment(order.createdAt).format("h:mm a")}</span>
             {moment(order.updatedAt).isAfter(order.createdAt) && (
                 <span className="text-[8px] text-emerald-500 font-bold uppercase mt-1">Updated</span>

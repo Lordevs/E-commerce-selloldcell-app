@@ -66,7 +66,7 @@ const AllCategory = () => {
         <div className="overflow-x-auto p-8 text-left">
              <table className="w-full text-left border-collapse">
                 <thead>
-                    <tr className="text-[10px] text-gray-600 font-bold uppercase tracking-widest italic border-b border-gray-100">
+                    <tr className="text-[10px] text-gray-600 font-semibold uppercase tracking-widest italic border-b border-gray-100">
                         <th className="px-6 py-6 font-medium text-left">Category Details</th>
                         <th className="px-6 py-6 font-medium text-center">Status</th>
                         <th className="px-6 py-6 font-medium text-center">Created At</th>
@@ -89,8 +89,8 @@ const AllCategory = () => {
                                         />
                                     </div>
                                     <div className="flex flex-col space-y-1">
-                                        <span className="text-xs font-bold text-gray-800 uppercase tracking-tight">{item.cName}</span>
-                                        <span className="text-[10px] text-gray-600 font-medium leading-relaxed line-clamp-1 max-w-xs">{item.cDescription}</span>
+                                        <span className="text-xs font-semibold text-gray-700 uppercase tracking-tight">{item.cName}</span>
+                                        <span className="text-[10px] text-gray-400 font-medium leading-relaxed line-clamp-1 max-w-xs">{item.cDescription}</span>
                                     </div>
                                 </div>
                             </td>
@@ -98,11 +98,11 @@ const AllCategory = () => {
                             {/* Status */}
                             <td className="px-6 py-6 align-top text-center">
                                 {item.cStatus === "Active" ? (
-                                  <span className="inline-flex items-center px-3 py-1 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[9px] font-bold uppercase tracking-widest">
+                                  <span className="inline-flex items-center px-3 py-1 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg text-[9px] font-semibold uppercase tracking-widest">
                                      Active
                                   </span>
                                 ) : (
-                                  <span className="inline-flex items-center px-3 py-1 bg-rose-50 text-rose-500 border border-rose-100 rounded-lg text-[9px] font-bold uppercase tracking-widest opacity-60">
+                                  <span className="inline-flex items-center px-3 py-1 bg-rose-50 text-rose-500 border border-rose-100 rounded-lg text-[9px] font-semibold uppercase tracking-widest opacity-60">
                                      Disabled
                                   </span>
                                 )}
@@ -111,15 +111,15 @@ const AllCategory = () => {
                             {/* Created At */}
                             <td className="px-6 py-6 align-top text-center">
                                 <div className="flex flex-col">
-                                    <span className="text-[10px] font-bold text-gray-800 uppercase tracking-tight">{moment(item.createdAt).format("MMM Do YY")}</span>
+                                    <span className="text-[10px] font-medium text-gray-600 uppercase tracking-tight">{moment(item.createdAt).format("MMM Do YY")}</span>
                                 </div>
                             </td>
 
                             {/* Timestamp */}
                             <td className="px-6 py-6 align-top text-center">
                                 <div className="flex flex-col">
-                                    <span className="text-[10px] font-bold text-gray-800 uppercase tracking-tight">{moment(item.updatedAt).format("MMM Do YY")}</span>
-                                    <span className="text-[9px] font-medium text-gray-600 mt-0.5">{moment(item.updatedAt).fromNow()}</span>
+                                    <span className="text-[10px] font-medium text-gray-600 uppercase tracking-tight">{moment(item.updatedAt).format("MMM Do YY")}</span>
+                                    <span className="text-[9px] font-medium text-gray-500 mt-0.5">{moment(item.updatedAt).fromNow()}</span>
                                 </div>
                             </td>
 
@@ -128,7 +128,7 @@ const AllCategory = () => {
                                 <div className="flex items-center justify-center space-x-2">
                                     <button
                                         onClick={() => editCategory(item._id, true, item.cDescription, item.cStatus, item.cImage, item.cName)}
-                                        className="w-8 h-8 flex items-center justify-center rounded-xl bg-rose-50 text-rose-400 hover:bg-rose-500 hover:text-white transition-all transform active:scale-95"
+                                        className="w-8 h-8 flex items-center justify-center rounded-xl bg-orange-50 text-orange-400 hover:bg-orange-500 hover:text-white transition-all transform active:scale-95"
                                         title="Edit Category"
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>

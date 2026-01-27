@@ -9,7 +9,7 @@ export const OrderContext = createContext();
 
 const OrderComponent = () => {
   return (
-    <div className="grid grid-cols-1 space-y-4">
+    <div className="grid grid-cols-1">
       <OrderMenu />
       <AllOrders />
     </div>
