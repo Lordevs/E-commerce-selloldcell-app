@@ -161,26 +161,26 @@ const EditCategoryModal = () => {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="Category Name"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 uppercase tracking-tight"
+                            className="px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-medium text-xs text-gray-600 uppercase tracking-tight"
                             type="text"
                             required
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
                         <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="status">Status</label>
-                        <div className="relative group/select">
+                        <div className="relative group">
                             <select
                                 value={status}
                                 name="status"
                                 onChange={(e) => setStatus(e.target.value)}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-600 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-medium text-xs text-gray-600 appearance-none italic uppercase tracking-widest pr-10 cursor-pointer"
                                 id="status"
                             >
                                 <option value="Active">Active</option>
                                 <option value="Disabled">Disabled</option>
                             </select>
-                            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-hover/select:text-emerald-600 transition-colors">
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-400 group-hover:text-emerald-600 transition-colors">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
                             </div>
                         </div>
                     </div>
@@ -192,7 +192,7 @@ const EditCategoryModal = () => {
                         value={des}
                         onChange={(e) => setDes(e.target.value)}
                         placeholder="Category Description..."
-                        className="px-8 py-6 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-medium text-gray-500 min-h-[150px] italic"
+                        className="px-6 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-medium text-xs text-gray-500 min-h-[150px] italic"
                         name="description"
                         id="description"
                     />
