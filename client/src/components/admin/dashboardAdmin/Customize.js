@@ -13,7 +13,7 @@ const Customize = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div className="max-w-xl">
                 <p className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-600 mb-2">Visual Experience</p>
-                <h2 className="text-3xl font-black text-gray-900 tracking-tighter mb-4">Shopify Slider Engine</h2>
+                <h2 className="text-3xl font-black text-gray-900 tracking-tighter mb-4">Hero Section</h2>
                 <p className="text-sm text-gray-500 font-medium leading-relaxed">
                     Manage your homepage hero section. Upload high-resolution images to capture user attention. 
                     Recommended resolution is <span className="text-gray-900 font-bold italic underline decoration-indigo-200">2000x800px</span> for optimal display.
