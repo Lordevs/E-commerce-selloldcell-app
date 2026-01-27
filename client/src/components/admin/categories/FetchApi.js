@@ -46,12 +46,18 @@ export const createCategory = async ({
   }
 };
 
-export const editCategory = async (cId, des, status) => {
-  let data = { cId: cId, cDescription: des, cStatus: status };
+export const editCategory = async (cId, des, status, cImage) => {
+  let formData = new FormData();
+  formData.append("cId", cId);
+  formData.append("cDescription", des);
+  formData.append("cStatus", status);
+  if (cImage) {
+    formData.append("cImage", cImage);
+  }
   try {
     let res = await axios.post(
       `${apiURL}/api/category/edit-category`,
-      data,
+      formData,
       Headers()
     );
     return res.data;

@@ -61,14 +61,26 @@ class Category {
     if (!cId || !cDescription || !cStatus) {
       return res.json({ error: "All filled must be required" });
     }
-    try {
-      let editCategory = categoryModel.findByIdAndUpdate(cId, {
-        cDescription,
-        cStatus,
-        updatedAt: Date.now(),
+    
+    let editData = { cDescription, cStatus, updatedAt: Date.now() };
+    
+    if (req.file) {
+      let editCategoryData = await categoryModel.findById(cId);
+      const oldImage = editCategoryData.cImage;
+      editData = { ...editData, cImage: req.file.filename };
+      
+      // Delete old image
+      const filePath = `./public/uploads/categories/${oldImage}`;
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.log(err);
+        }
       });
-      let edit = await editCategory.exec();
-      if (edit) {
+    }
+
+    try {
+      let updateCategory = await categoryModel.findByIdAndUpdate(cId, editData);
+      if (updateCategory) {
         return res.json({ success: "Category edit successfully" });
       }
     } catch (err) {
