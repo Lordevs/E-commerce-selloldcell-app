@@ -3,7 +3,7 @@ import { loginReq } from "./fetchApi";
 import { LayoutContext } from "../index";
 import { useSnackbar } from 'notistack';
 
-const Login = (props) => {
+const Login = () => {
   const { data: layoutData, dispatch: layoutDispatch } = useContext(
     LayoutContext
   );
@@ -131,12 +131,9 @@ const Login = (props) => {
               Remember me
             </label>
           </div>
-          <a className="block text-sm font-bold text-indigo-600 hover:text-indigo-500 transition-colors" href="/">
-            Lost your password?
-          </a>
         </div>
         <div
-          onClick={(e) => formSubmit()}
+          onClick={() => formSubmit()}
           className="w-full py-3 bg-gray-900 hover:bg-black text-white rounded-xl font-bold text-sm tracking-widest uppercase transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-95 text-center cursor-pointer"
         >
           Login
