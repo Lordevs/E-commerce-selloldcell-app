@@ -9,32 +9,33 @@ const Customize = () => {
 
   return (
     <Fragment>
-      <div className="m-4 md:w-1/2">
+      <div className="">
         {!data.uploadSliderBtn ? (
-          <div
+          <button
             onClick={(e) =>
               dispatch({
                 type: "uploadSliderBtn",
                 payload: !data.uploadSliderBtn,
               })
             }
-            style={{ background: "#303031" }}
-            className="cursor-pointer rounded-full p-2 flex items-center justify-center text-gray-100 text-sm font-semibold uppercase"
+            className="group relative flex items-center justify-center px-8 py-3 bg-gradient-to-r from-gray-900 to-black text-white rounded-2xl font-bold uppercase tracking-widest text-sm transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl active:scale-95"
           >
             <svg
-              className="w-6 h-6 text-gray-100 mr-2"
-              fill="currentColor"
-              viewBox="0 0 20 20"
+              className="w-5 h-5 mr-3 group-hover:rotate-90 transition-transform duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                clipRule="evenodd"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
               />
             </svg>
-            Customize Slider Image
-          </div>
+            Customize Slider Images
+          </button>
         ) : (
           ""
         )}
@@ -50,7 +51,6 @@ const UploadImageSection = () => {
   const uploadImageHandler = (image) => {
     if (!image) return;
     
-    // Check if aspect ratio is 2000x800 (Ratio: 2.5) with small tolerance
     const img = new Image();
     img.src = URL.createObjectURL(image);
     img.onload = () => {
@@ -58,7 +58,6 @@ const UploadImageSection = () => {
       const height = img.height;
       const ratio = width / height;
       
-      // Allow ratio 2.5 (2000/800) with +/- 0.05 tolerance
       if (ratio >= 2.45 && ratio <= 2.55) {
         uploadImage(image, dispatch);
       } else {
@@ -70,65 +69,61 @@ const UploadImageSection = () => {
 
   return (
     <Fragment>
-      <div className="relative m-4 bg-white p-4 shadow-lg">
-        <h1 className="border-b-2 border-yellow-700 mb-4 pb-2 text-2xl font-semibold">
-          Shop Slider Images
-        </h1>
-        <div className="relative flex flex-col space-y-2">
-          <div
-            style={{ background: "#303031" }}
-            className="relative z-0 px-4 py-2 rounded text-white flex justify-center space-x-2 md:w-4/12"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-              />
-            </svg>{" "}
-            <span>Upload File</span>
+      <div className="relative bg-white p-8 rounded-3xl shadow-2xl border border-gray-100 transition-all duration-500">
+        <div className="flex items-center justify-between border-b border-gray-100 mb-8 pb-6">
+          <div className="flex items-center space-x-4">
+             <div className="p-3 bg-indigo-50 rounded-2xl">
+                <svg className="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+             </div>
+             <div>
+                <h1 className="text-2xl font-bold text-gray-800 tracking-tight">Shop Slider Images</h1>
+                <p className="text-sm text-gray-400 font-medium mt-1">Recommended: 2000x800 pixels</p>
+             </div>
           </div>
-          <input
-            onChange={(e) => uploadImageHandler(e.target.files[0])}
-            name="image"
-            accept=".jpg, .png, .jpeg, .gif, .bmp, .tif, .tiff|image/*"
-            className="absolute z-10 opacity-0 bg-gray-100"
-            type="file"
-            id="image"
-          />
-        </div>
-        <span
-          onClick={(e) =>
-            dispatch({
-              type: "uploadSliderBtn",
-              payload: !data.uploadSliderBtn,
-            })
-          }
-          style={{ background: "#303031" }}
-          className="cursor-pointer absolute top-0 right-0 m-4 rounded-full p-1"
-        >
-          <svg
-            className="w-6 h-6 text-white"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+          
+          <button
+            onClick={(e) =>
+              dispatch({
+                type: "uploadSliderBtn",
+                payload: !data.uploadSliderBtn,
+              })
+            }
+            className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all duration-300"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M6 18L18 6M6 6l12 12"
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-8">
+          <div className="relative group w-full md:w-auto">
+            <div className="relative z-10 px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold flex items-center justify-center space-x-3 shadow-lg group-hover:bg-indigo-700 transition-all duration-300">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <span>Choose New Slide</span>
+            </div>
+            <input
+              onChange={(e) => uploadImageHandler(e.target.files[0])}
+              name="image"
+              accept="image/*"
+              className="absolute inset-0 z-20 opacity-0 cursor-pointer"
+              type="file"
+              id="image"
             />
-          </svg>
-        </span>
+          </div>
+          
+          <div className="flex-1">
+             <div className="p-4 bg-yellow-50 rounded-2xl border border-yellow-100">
+                <p className="text-xs text-yellow-800 font-semibold uppercase tracking-widest mb-1">Upload Guide</p>
+                <p className="text-sm text-yellow-700">Ensure high-resolution images for best appearance on large screens.</p>
+             </div>
+          </div>
+        </div>
+
         <AllImages />
       </div>
     </Fragment>
@@ -150,61 +145,45 @@ const AllImages = () => {
   return (
     <Fragment>
       {data.imageUpload ? (
-        <div className="flex items-center justify-center p-8">
-          <svg
-            className="w-12 h-12 animate-spin text-gray-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-            ></path>
-          </svg>
+        <div className="flex flex-col items-center justify-center p-12 space-y-4">
+          <div className="w-16 h-16 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin"></div>
+          <p className="text-sm font-bold text-gray-400 tracking-widest uppercase">Uploading Image...</p>
         </div>
       ) : (
         ""
       )}
-      <div className="grid grid-cols-1 md:grid md:grid-cols-2 lg:grid-cols-3 my-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
         {data.sliderImages.length > 0 ? (
           data.sliderImages.map((item, index) => {
             return (
-              <div key={index} className="relative col-span-1 m-2 border">
+              <div key={index} className="group relative col-span-1 rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100">
                 <img
-                  className="w-full md:h-32 object-center object-cover"
+                  className="w-full aspect-[2.5/1] object-cover group-hover:scale-110 transition-transform duration-700"
                   src={`${apiURL}/uploads/customize/${item.slideImage}`}
                   alt="sliderImages"
                 />
-                <span
-                  onClick={(e) => deleteImageReq(item._id)}
-                  style={{ background: "#303031" }}
-                  className="absolute top-0 right-0 m-1 text-white cursor-pointer rounded-full p-1"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </span>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-6">
+                   <span className="text-white text-sm font-bold tracking-tight">Slide {index + 1}</span>
+                   <button
+                     onClick={(e) => deleteImageReq(item._id)}
+                     className="p-3 bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-lg transform hover:scale-110 transition-all duration-300"
+                   >
+                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                     </svg>
+                   </button>
+                </div>
               </div>
             );
           })
         ) : (
-          <div className="col-span-1 md:col-span-2 lg:col-span-3 text-center text-xl font-light w-full bg-orange-200 rounded py-2">
-            No slide image found
+          <div className="col-span-full py-16 text-center">
+             <div className="inline-flex p-6 bg-gray-50 rounded-full text-gray-300 mb-4">
+                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+             </div>
+             <p className="text-xl font-medium text-gray-400">No slide images found in gallery</p>
           </div>
         )}
       </div>
