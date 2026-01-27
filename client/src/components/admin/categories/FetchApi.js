@@ -46,9 +46,10 @@ export const createCategory = async ({
   }
 };
 
-export const editCategory = async (cId, des, status, cImage) => {
+export const editCategory = async (cId, des, status, cImage, cName) => {
   let formData = new FormData();
   formData.append("cId", cId);
+  formData.append("cName", cName);
   formData.append("cDescription", des);
   formData.append("cStatus", status);
   if (cImage) {

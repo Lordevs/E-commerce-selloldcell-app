@@ -37,7 +37,7 @@ const AllCategory = (props) => {
     }
   };
 
-  const editCategory = (cId, type, des, status, cImage) => {
+  const editCategory = (cId, type, des, status, cImage, name) => {
     if (type) {
       dispatch({
         type: "editCategoryModalOpen",
@@ -45,6 +45,7 @@ const AllCategory = (props) => {
         des: des,
         status: status,
         cImage: cImage,
+        name: name,
       });
     }
   };
@@ -117,7 +118,7 @@ const AllCategory = (props) => {
                     {/* Actions */}
                     <div className="col-span-2 flex items-center justify-end space-x-2">
                         <button
-                            onClick={() => editCategory(item._id, true, item.cDescription, item.cStatus, item.cImage)}
+                            onClick={() => editCategory(item._id, true, item.cDescription, item.cStatus, item.cImage, item.cName)}
                             className="w-9 h-9 flex items-center justify-center rounded-xl bg-gray-50 text-gray-400 hover:bg-gray-900 hover:text-white transition-all transform active:scale-90"
                             title="Edit Master Matrix"
                         >

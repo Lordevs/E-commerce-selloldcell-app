@@ -7,6 +7,7 @@ export const categoryState = {
     des: "",
     status: "",
     cImage: "",
+    name: "",
   },
   loading: false,
 };
@@ -35,6 +36,7 @@ export const categoryReducer = (state, action) => {
           des: action.des,
           status: action.status,
           cImage: action.cImage,
+          name: action.name,
         },
       };
     case "editCategoryModalClose":
@@ -46,6 +48,7 @@ export const categoryReducer = (state, action) => {
           des: "",
           status: "",
           cImage: "",
+          name: "",
         },
       };
     case "loading":

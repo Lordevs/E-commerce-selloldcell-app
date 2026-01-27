@@ -7,6 +7,7 @@ const apiURL = process.env.REACT_APP_API_URL;
 const EditCategoryModal = (props) => {
   const { data, dispatch } = useContext(CategoryContext);
 
+  const [name, setName] = useState("");
   const [des, setDes] = useState("");
   const [status, setStatus] = useState("");
   const [cId, setCid] = useState("");
@@ -16,13 +17,14 @@ const EditCategoryModal = (props) => {
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
+    setName(data.editCategoryModal.name || "");
     setDes(data.editCategoryModal.des || "");
     setStatus(data.editCategoryModal.status || "");
     setCid(data.editCategoryModal.cId || "");
     setExistingImage(data.editCategoryModal.cImage || "");
     setPreview(null);
     setImage("");
-  }, [data.editCategoryModal.modal, data.editCategoryModal.des, data.editCategoryModal.status, data.editCategoryModal.cId, data.editCategoryModal.cImage]);
+  }, [data.editCategoryModal.modal, data.editCategoryModal.des, data.editCategoryModal.status, data.editCategoryModal.cId, data.editCategoryModal.cImage, data.editCategoryModal.name]);
 
   const fetchData = async () => {
     let responseData = await getAllCategory();
@@ -36,7 +38,7 @@ const EditCategoryModal = (props) => {
 
   const submitForm = async () => {
     dispatch({ type: "loading", payload: true });
-    let edit = await editCategory(cId, des, status, image);
+    let edit = await editCategory(cId, des, status, image, name);
     if (edit.error) {
       console.log(edit.error);
       dispatch({ type: "loading", payload: false });
@@ -54,6 +56,12 @@ const EditCategoryModal = (props) => {
       setImage(file);
       setPreview(URL.createObjectURL(file));
     }
+  };
+
+  const removeSelectedImage = (e) => {
+    e.stopPropagation();
+    setImage("");
+    setPreview(null);
   };
 
   const handleDragOver = (e) => {
@@ -118,18 +126,18 @@ const EditCategoryModal = (props) => {
                         {preview ? (
                             <Fragment>
                                 <img src={preview} className="w-full h-full object-cover" alt="Preview" />
-                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <p className="text-white text-[10px] font-black uppercase tracking-widest">Drop to replace current preview</p>
+                                <div className="absolute top-4 right-4 z-20">
+                                    <button 
+                                        onClick={removeSelectedImage}
+                                        className="w-10 h-10 bg-white/90 backdrop-blur shadow-lg rounded-xl flex items-center justify-center text-rose-500 hover:bg-rose-500 hover:text-white transition-all transform hover:rotate-90 active:scale-90"
+                                        title="Clear Selection"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
+                                    </button>
                                 </div>
                             </Fragment>
                         ) : existingImage ? (
-                            <Fragment>
-                                <img src={`${apiURL}/uploads/categories/${existingImage}`} className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700" alt="Current" />
-                                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 flex flex-col items-center justify-center transition-all">
-                                    <p className="text-white text-[10px] font-black uppercase tracking-widest mb-1 shadow-sm">Active Asset</p>
-                                    <p className="text-white/60 text-[8px] font-bold uppercase tracking-widest italic group-hover:text-white transition-colors">Drag & Drop to replace</p>
-                                </div>
-                            </Fragment>
+                            <img src={`${apiURL}/uploads/categories/${existingImage}`} className="w-full h-full object-cover" alt="Current" />
                         ) : (
                             <div className="flex flex-col items-center space-y-3 pointer-events-none opacity-20">
                                 <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
@@ -145,27 +153,39 @@ const EditCategoryModal = (props) => {
                     <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest italic text-center">Visual Asset Configuration</span>
                 </div>
 
-                <div className="flex flex-col space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-4 italic" htmlFor="status">Operational Status</label>
-                    <div className="relative group/select">
-                        <select
-                            value={status}
-                            name="status"
-                            onChange={(e) => setStatus(e.target.value)}
-                            className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
-                            id="status"
-                        >
-                            <option value="Active">Operational Status</option>
-                            <option value="Disabled">Deactivated Status</option>
-                        </select>
-                        <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-hover/select:text-emerald-600 transition-colors">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="flex flex-col space-y-2">
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-4 italic" htmlFor="name">Title</label>
+                        <input
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="CLASSIFICATION NAME"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 uppercase tracking-tight"
+                            type="text"
+                        />
+                    </div>
+                    <div className="flex flex-col space-y-2">
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-4 italic" htmlFor="status">Status</label>
+                        <div className="relative group/select">
+                            <select
+                                value={status}
+                                name="status"
+                                onChange={(e) => setStatus(e.target.value)}
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                id="status"
+                            >
+                                <option value="Active">Operational Status</option>
+                                <option value="Disabled">Deactivated Status</option>
+                            </select>
+                            <div className="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 group-hover/select:text-emerald-600 transition-colors">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div className="flex flex-col space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-4 italic" htmlFor="description">Logic Update</label>
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-4 italic" htmlFor="description">Description</label>
                     <textarea
                         value={des}
                         onChange={(e) => setDes(e.target.value)}

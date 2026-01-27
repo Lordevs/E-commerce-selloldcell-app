@@ -57,12 +57,12 @@ class Category {
   }
 
   async postEditCategory(req, res) {
-    let { cId, cDescription, cStatus } = req.body;
-    if (!cId || !cDescription || !cStatus) {
+    let { cId, cName, cDescription, cStatus } = req.body;
+    if (!cId || !cName || !cDescription || !cStatus) {
       return res.json({ error: "All filled must be required" });
     }
     
-    let editData = { cDescription, cStatus, updatedAt: Date.now() };
+    let editData = { cName, cDescription, cStatus, updatedAt: Date.now() };
     
     if (req.file) {
       let editCategoryData = await categoryModel.findById(cId);

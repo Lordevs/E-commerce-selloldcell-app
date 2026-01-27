@@ -73,6 +73,12 @@ const AddCategoryModal = (props) => {
     }
   };
 
+  const removeImage = (e) => {
+    e.stopPropagation();
+    setFdata({ ...fData, cImage: "" });
+    setPreview(null);
+  };
+
   const handleDragOver = (e) => {
     e.preventDefault();
     setIsDragging(true);
@@ -110,8 +116,8 @@ const AddCategoryModal = (props) => {
 
           <div className="relative z-10 flex items-center justify-between px-10 py-8 border-b border-gray-50 bg-gray-50/30">
             <div>
-                 <h2 className="text-2xl font-black text-gray-900 tracking-tighter uppercase italic">Register <span className="text-indigo-600">Category</span></h2>
-                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1 italic">Define new classification parameters</p>
+                 <h2 className="text-2xl font-black text-gray-900 tracking-tighter uppercase italic">Add <span className="text-indigo-600">Category</span></h2>
+                 {/* <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1 italic">Define new classification parameters</p> */}
             </div>
             <button
                 onClick={(e) => dispatch({ type: "addCategoryModal", payload: false })}
@@ -144,7 +150,16 @@ const AddCategoryModal = (props) => {
                         {preview ? (
                             <Fragment>
                                 <img src={preview} className="w-full h-full object-cover" alt="Preview" />
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <div className="absolute top-4 right-4 z-20">
+                                    <button 
+                                        onClick={removeImage}
+                                        className="w-10 h-10 bg-white/90 backdrop-blur shadow-lg rounded-xl flex items-center justify-center text-rose-500 hover:bg-rose-500 hover:text-white transition-all transform hover:rotate-90 active:scale-90"
+                                        title="Remove Image"
+                                    >
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" /></svg>
+                                    </button>
+                                </div>
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                                     <p className="text-white text-[10px] font-black uppercase tracking-widest">Drop new image to replace</p>
                                 </div>
                             </Fragment>
@@ -170,7 +185,7 @@ const AddCategoryModal = (props) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="name">Title Index</label>
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="name">Title </label>
                         <input
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, cName: e.target.value })}
                             value={fData.cName}
@@ -181,7 +196,7 @@ const AddCategoryModal = (props) => {
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="status">Operational Status</label>
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="status">Status</label>
                         <div className="relative group/select">
                             <select
                                 onChange={(e) => setFdata({ ...fData, success: false, error: false, cStatus: e.target.value })}
@@ -200,7 +215,7 @@ const AddCategoryModal = (props) => {
                 </div>
 
                 <div className="flex flex-col space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="description">Strategic Summary</label>
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-2 italic" htmlFor="description">Description</label>
                     <textarea
                         onChange={(e) => setFdata({ ...fData, success: false, error: false, cDescription: e.target.value })}
                         value={fData.cDescription}
