@@ -52,9 +52,9 @@ const EditProductModal = (props) => {
       pDescription: data.editProductModal.pDescription,
       pImages: data.editProductModal.pImages,
       pStatus: data.editProductModal.pStatus,
-      pCategory: typeof data.editProductModal.pCategory === 'object' && data.editProductModal.pCategory._id
+      pCategory: typeof data.editProductModal.pCategory === 'object' && data.editProductModal.pCategory !== null && data.editProductModal.pCategory._id
         ? data.editProductModal.pCategory._id
-        : data.editProductModal.pCategory,
+        : data.editProductModal.pCategory || "",
       pQuantity: data.editProductModal.pQuantity,
       pPrice: data.editProductModal.pPrice,
       pOffer: data.editProductModal.pOffer,
@@ -165,7 +165,7 @@ const EditProductModal = (props) => {
 
           <div className="relative z-10 flex items-center justify-between px-10 py-8 border-b border-gray-50 bg-gray-50/30">
             <div>
-                 <h2 className="text-2xl font-black text-gray-900 tracking-tighter uppercase italic text-emerald-600">Update <span className="text-gray-900">Product Asset</span></h2>
+                 <h2 className="text-2xl font-bold text-gray-900 tracking-tighter uppercase italic text-emerald-600">Update <span className="text-gray-900">Product Asset</span></h2>
                  <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mt-1 italic">Reconfigure asset parameters</p>
             </div>
             <button
@@ -178,12 +178,12 @@ const EditProductModal = (props) => {
 
           <div className="relative z-10 p-10 overflow-y-auto">
             {fData.error && (
-                <div className="mb-6 px-6 py-4 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl text-[10px] font-black uppercase tracking-widest italic animate-pulse">
+                <div className="mb-6 px-6 py-4 bg-rose-50 border border-rose-100 text-rose-600 rounded-2xl text-[10px] font-bold uppercase tracking-widest italic animate-pulse">
                     Conflict: {fData.error}
                 </div>
             )}
             {fData.success && (
-                <div className="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl text-[10px] font-black uppercase tracking-widest italic">
+                <div className="mb-6 px-6 py-4 bg-emerald-50 border border-emerald-100 text-emerald-600 rounded-2xl text-[10px] font-bold uppercase tracking-widest italic">
                     Asset Reconfigured Successfully
                 </div>
             )}
@@ -193,7 +193,7 @@ const EditProductModal = (props) => {
                 {/* Image Section */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     <div className="lg:col-span-12 flex flex-col space-y-4">
-                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Active & New Identifiers</label>
+                        <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Active & New Identifiers</label>
                         <div className="flex flex-wrap gap-4">
                             {/* Existing Images */}
                             {fData.pImages && fData.pImages.map((img, i) => (
@@ -238,34 +238,34 @@ const EditProductModal = (props) => {
                 {/* Info Section */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Product Name</label>
+                        <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Product Name</label>
                         <input
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, pName: e.target.value })}
                             value={fData.pName}
                             placeholder="ASSET IDENTIFIER"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 uppercase tracking-tight"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 uppercase tracking-tight"
                             type="text"
                             required
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Valuation ($)</label>
+                        <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Valuation ($)</label>
                         <input
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, pPrice: e.target.value })}
                             value={fData.pPrice}
                             placeholder="0.00"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 uppercase tracking-tight"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 uppercase tracking-tight"
                             type="number"
                             required
                         />
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Offer Yield (%)</label>
+                        <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Offer Yield (%)</label>
                         <input
                             onChange={(e) => setFdata({ ...fData, success: false, error: false, pOffer: e.target.value })}
                             value={fData.pOffer}
                             placeholder="0"
-                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 uppercase tracking-tight text-rose-500"
+                            className="px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 uppercase tracking-tight text-rose-500"
                             type="number"
                         />
                     </div>
@@ -273,12 +273,12 @@ const EditProductModal = (props) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Category Link</label>
+                        <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Category Link</label>
                         <div className="relative group/select">
                             <select
                                 onChange={(e) => setFdata({ ...fData, success: false, error: false, pCategory: e.target.value })}
                                 value={fData.pCategory}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 required
                             >
                                 <option disabled value="">SELECT CATEGORY</option>
@@ -292,12 +292,12 @@ const EditProductModal = (props) => {
                         </div>
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Product Size</label>
+                        <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Product Size</label>
                         <div className="relative group/select">
                             <select
                                 onChange={(e) => setFdata({ ...fData, pSize: e.target.value })}
                                 value={fData.pSize}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 required
                             >
                                 <option value="" disabled>SELECT SIZE</option>
@@ -305,20 +305,30 @@ const EditProductModal = (props) => {
                                 <option value="10 ml">10 ML UNIT</option>
                                 <option value="20 ml">20 ML UNIT</option>
                                 <option value="50 ml">50 ML UNIT</option>
-                                <option value="Other">CUSTOM SIZE</option>
+                                <option value="Other">Other</option>
                             </select>
                             <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-600 group-hover/select:text-emerald-600 transition-colors">
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" /></svg>
                             </div>
                         </div>
+                        {fData.pSize === "Other" && (
+                            <input
+                                value={customSize}
+                                onChange={(e) => setCustomSize(e.target.value)}
+                                placeholder="Enter custom size (ml)"
+                                type="number"
+                                className="mt-3 px-8 py-5 bg-gray-50 border-2 border-emerald-400 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-600 transition-all font-bold text-gray-900 uppercase tracking-tight"
+                                required
+                            />
+                        )}
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Property Class</label>
+                        <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Property Class</label>
                         <div className="relative group/select">
                             <select
                                 onChange={(e) => setFdata({ ...fData, pProperty: e.target.value })}
                                 value={fData.pProperty}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 required
                             >
                                 <option value="" disabled>SELECT PROPERTY</option>
@@ -335,12 +345,12 @@ const EditProductModal = (props) => {
                         </div>
                     </div>
                     <div className="flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Operational Status</label>
+                        <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Operational Status</label>
                         <div className="relative group/select">
                             <select
                                 onChange={(e) => setFdata({ ...fData, pStatus: e.target.value })}
                                 value={fData.pStatus}
-                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
+                                className="w-full px-8 py-5 bg-gray-50 border border-gray-100 rounded-3xl focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-gray-900 appearance-none italic uppercase tracking-widest pr-12 cursor-pointer"
                                 required
                             >
                                 <option value="Active">OPERATIONAL</option>
@@ -355,7 +365,7 @@ const EditProductModal = (props) => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div className="lg:col-span-8 flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Product Description</label>
+                        <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Product Description</label>
                         <textarea
                             onChange={(e) => setFdata({ ...fData, pDescription: e.target.value })}
                             value={fData.pDescription}
@@ -365,30 +375,30 @@ const EditProductModal = (props) => {
                         />
                     </div>
                     <div className="lg:col-span-4 flex flex-col space-y-2">
-                        <label className="text-[10px] font-black text-gray-600 uppercase tracking-widest ml-2 italic">Stock Reserve</label>
+                        <label className="text-[10px] font-bold text-gray-600 uppercase tracking-widest ml-2 italic">Stock Reserve</label>
                         <input
                             onChange={(e) => setFdata({ ...fData, pQuantity: e.target.value })}
                             value={fData.pQuantity}
                             placeholder="0"
-                            className="px-8 py-10 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-black text-4xl text-gray-900 text-center tracking-tighter"
+                            className="px-8 py-10 bg-gray-50 border border-gray-100 rounded-[2rem] focus:outline-none focus:ring-4 focus:ring-emerald-500/10 focus:bg-white focus:border-emerald-500 transition-all font-bold text-4xl text-gray-900 text-center tracking-tighter"
                             type="number"
                             required
                         />
                     </div>
                 </div>
 
-                <div className="pt-4 pb-10">
+                <div className="pt-6 pb-8 bg-white sticky bottom-0 border-t border-gray-100 -mx-10 px-10">
                     <button
                         type="submit"
                         disabled={data.loading}
-                        className="w-full py-6 bg-emerald-600 hover:bg-emerald-700 text-white rounded-[2rem] font-black text-[11px] uppercase tracking-[0.4em] transition-all shadow-2xl shadow-emerald-100 hover:-translate-y-2 active:scale-95 flex items-center justify-center space-x-4"
+                        className="w-full py-4 bg-gray-900 hover:bg-black text-white rounded-full font-semibold text-sm transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-95 flex items-center justify-center space-x-2"
                     >
                         {data.loading ? (
                              <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                         ) : (
                             <Fragment>
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
-                                <span>synchronize configuration</span>
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                                <span>Update Product</span>
                             </Fragment>
                         )}
                     </button>

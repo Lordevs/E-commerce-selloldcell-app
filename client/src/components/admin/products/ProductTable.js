@@ -58,7 +58,7 @@ const AllProduct = (props) => {
     <Fragment>
       <div className="bg-white min-h-full">
         <div className="flex items-center justify-between px-8 py-6 border-b border-gray-100">
-            <h3 className="text-[11px] font-black text-gray-600 uppercase tracking-[0.3em] font-mono">
+            <h3 className="text-[11px] font-bold text-gray-600 uppercase tracking-[0.3em] font-mono">
                 {products?.length || 0} {products?.length === 1 ? 'Asset' : 'Assets'} IN PRODUCTION
             </h3>
         </div>
@@ -67,18 +67,18 @@ const AllProduct = (props) => {
             <table className="w-full text-left border-collapse">
                 <thead>
                     <tr className="bg-gray-50/50">
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100">Image</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100">Product</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100">Description</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100">Category</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100">Price</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100">Stock</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100">Size</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100">Property</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100">Offer</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100">Status</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100">Created At</th>
-                        <th className="px-6 py-4 text-[10px] font-black text-gray-700 uppercase tracking-widest border-b border-gray-100 text-right">Action</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100">Image</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100">Product</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100">Description</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100">Category</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100">Price</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100">Stock</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100">Size</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100">Property</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100">Offer</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100">Status</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100">Created At</th>
+                        <th className="px-6 py-4 text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-gray-100 text-right">Action</th>
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50">
@@ -98,7 +98,7 @@ const AllProduct = (props) => {
 
                                 {/* Product */}
                                 <td className="px-6 py-4">
-                                    <span className="text-xs font-black text-gray-900 uppercase tracking-tight group-hover:text-indigo-600 transition-colors whitespace-nowrap">
+                                    <span className="text-xs font-bold text-gray-900 uppercase tracking-tight group-hover:text-indigo-600 transition-colors whitespace-nowrap">
                                         {item.pName}
                                     </span>
                                 </td>
@@ -112,14 +112,14 @@ const AllProduct = (props) => {
 
                                 {/* Category */}
                                 <td className="px-6 py-4 text-center">
-                                     <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest px-2 py-1 bg-gray-100 rounded-lg whitespace-nowrap">
+                                     <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest px-2 py-1 bg-gray-100 rounded-lg whitespace-nowrap">
                                         {item.pCategory?.cName}
                                      </span>
                                 </td>
 
                                 {/* Price */}
                                 <td className="px-6 py-4">
-                                     <span className="text-xs font-black text-gray-900 tracking-tighter">
+                                     <span className="text-xs font-bold text-gray-900 tracking-tighter">
                                         ${item.pPrice}
                                      </span>
                                 </td>
@@ -127,7 +127,7 @@ const AllProduct = (props) => {
                                 {/* Stock */}
                                 <td className="px-6 py-4">
                                     <div className="flex flex-col">
-                                        <span className={`text-xs font-black ${item.pQuantity <= 5 ? 'text-rose-500' : 'text-gray-900'}`}>
+                                        <span className={`text-xs font-bold ${item.pQuantity <= 5 ? 'text-rose-500' : 'text-gray-900'}`}>
                                             {item.pQuantity}
                                         </span>
                                         <span className="text-[8px] font-bold text-gray-600 uppercase tracking-tighter">Units</span>
@@ -150,7 +150,7 @@ const AllProduct = (props) => {
 
                                 {/* Offer */}
                                 <td className="px-6 py-4">
-                                    <span className="text-xs font-black text-rose-500 tracking-tighter">
+                                    <span className="text-xs font-bold text-rose-500 tracking-tighter">
                                         {item.pOffer}%
                                     </span>
                                 </td>
@@ -159,7 +159,7 @@ const AllProduct = (props) => {
                                 <td className="px-6 py-4">
                                     <div className="flex items-center space-x-2">
                                         <div className={`w-1.5 h-1.5 rounded-full ${item.pStatus === 'Active' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]' : 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.4)]'}`}></div>
-                                        <span className={`text-[9px] font-black uppercase tracking-widest ${item.pStatus === 'Active' ? 'text-emerald-600' : 'text-rose-600'}`}>
+                                        <span className={`text-[9px] font-bold uppercase tracking-widest ${item.pStatus === 'Active' ? 'text-emerald-600' : 'text-rose-600'}`}>
                                             {item.pStatus}
                                         </span>
                                     </div>
@@ -196,7 +196,7 @@ const AllProduct = (props) => {
                     ) : (
                         <tr>
                             <td colSpan="12" className="px-6 py-20 text-center">
-                                <p className="text-xl font-black text-gray-900 tracking-tighter uppercase italic">Neutral State Detected</p>
+                                <p className="text-xl font-bold text-gray-900 tracking-tighter uppercase italic">Neutral State Detected</p>
                                 <p className="text-[10px] text-gray-600 font-bold uppercase tracking-widest mt-2 italic">Zero assets synchronized</p>
                             </td>
                         </tr>
