@@ -9,7 +9,7 @@ export const CategoryContext = createContext();
 
 const CategoryComponent = () => {
   return (
-    <div className="grid grid-cols-1 space-y-4 p-4">
+    <div className="flex flex-col min-h-full">
       <CategoryMenu />
       <AllCategories />
     </div>

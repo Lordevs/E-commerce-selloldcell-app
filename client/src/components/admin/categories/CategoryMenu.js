@@ -8,34 +8,23 @@ const CategoryMenu = (props) => {
 
   return (
     <Fragment>
-      <div className="col-span-1 flex items-center">
-        <div className="flex flex-col space-y-4 md:flex-row md:justify-between md:items-center w-full">
-          {/* It's open the add category modal */}
-          <div
-            style={{ background: "#303031" }}
-            onClick={(e) =>
-              dispatch({ type: "addCategoryModal", payload: true })
-            }
-            className="cursor-pointer rounded-full p-2 flex items-center justify-center text-gray-100 text-sm font-semibold uppercase"
-          >
-            <svg
-              className="w-6 h-6 text-gray-100 mr-2"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Add Category
-          </div>
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8">
+        <div>
+            <h2 className="text-3xl font-black text-gray-900 tracking-tighter uppercase italic">Inventory Categories</h2>
+            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Manage and organize your product catalog</p>
         </div>
-        <AddCategoryModal />
-        <EditCategoryModal />
+        <button
+            onClick={() => dispatch({ type: "addCategoryModal", payload: true })}
+            className="flex items-center space-x-3 px-8 py-4 bg-gray-900 hover:bg-black text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] transition-all duration-300 transform active:scale-95 shadow-xl shadow-gray-200"
+        >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <span>Create New Category</span>
+        </button>
       </div>
+      <AddCategoryModal />
+      <EditCategoryModal />
     </Fragment>
   );
 };
