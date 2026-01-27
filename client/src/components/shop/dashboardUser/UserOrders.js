@@ -10,14 +10,14 @@ const TableHeader = () => {
     <Fragment>
       <thead>
         <tr>
-          <th className="px-4 py-2 border">Products</th>
-          <th className="px-4 py-2 border">Status</th>
-          <th className="px-4 py-2 border">Total</th>
-          <th className="px-4 py-2 border">Phone</th>
-          <th className="px-4 py-2 border">Address</th>
-          <th className="px-4 py-2 border">Transaction Id</th>
-          <th className="px-4 py-2 border">Checkout</th>
-          <th className="px-4 py-2 border">Processing</th>
+          <th className="px-6 py-4 bg-gray-50 text-left text-xs font-bold text-gray-500 uppercase tracking-wider">Products</th>
+          <th className="px-6 py-4 bg-gray-50 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Status</th>
+          <th className="px-6 py-4 bg-gray-50 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Total</th>
+          <th className="px-6 py-4 bg-gray-50 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Phone</th>
+          <th className="px-6 py-4 bg-gray-50 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Address</th>
+          <th className="px-6 py-4 bg-gray-50 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Transaction Id</th>
+          <th className="px-6 py-4 bg-gray-50 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Ordered On</th>
+          <th className="px-6 py-4 bg-gray-50 text-center text-xs font-bold text-gray-500 uppercase tracking-wider">Status Updated</th>
         </tr>
       </thead>
     </Fragment>
@@ -25,64 +25,62 @@ const TableHeader = () => {
 };
 
 const TableBody = ({ order }) => {
+    
+  const getStatusBadge = (status) => {
+      switch (status) {
+          case "Not processed":
+              return <span className="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full bg-red-100 text-red-800">Not Processed</span>;
+          case "Processing":
+              return <span className="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full bg-yellow-100 text-yellow-800">Processing</span>;
+          case "Shipped":
+              return <span className="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full bg-blue-100 text-blue-800">Shipped</span>;
+          case "Delivered":
+              return <span className="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full bg-green-100 text-green-800">Delivered</span>;
+          case "Cancelled":
+              return <span className="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full bg-red-100 text-red-800">Cancelled</span>;
+          default:
+              return <span className="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full bg-gray-100 text-gray-800">{status}</span>;
+      }
+  };
+
   return (
     <Fragment>
-      <tr className="border-b">
-        <td className="w-48 hover:bg-gray-200 p-2 flex flex-col space-y-1">
-          {order.allProduct.map((product, i) => {
-            return (
-              <span className="block flex items-center space-x-2" key={i}>
-                <img
-                  className="w-8 h-8 object-cover object-center"
-                  src={`${apiURL}/uploads/products/${product.id.pImages[0]}`}
-                  alt="productImage"
-                />
-                <span>{product.id.pName}</span>
-                <span>{product.quantitiy}x</span>
-              </span>
-            );
-          })}
+      <tr className="bg-white border-b border-gray-100 hover:bg-gray-50/50 transition-colors">
+        <td className="px-6 py-4 whitespace-nowrap">
+            <div className="flex flex-col space-y-2">
+            {order.allProduct.map((product, i) => {
+                return (
+                <div className="flex items-center space-x-3" key={i}>
+                    <img
+                    className="h-10 w-10 rounded-lg object-cover object-center border border-gray-100 shadow-sm"
+                    src={`${apiURL}/uploads/products/${product.id.pImages[0]}`}
+                    alt="productImage"
+                    />
+                    <div className="flex flex-col">
+                        <span className="text-sm font-bold text-gray-900 line-clamp-1 max-w-[150px]">{product.id.pName}</span>
+                        <span className="text-xs text-gray-500 font-medium">{product.quantitiy}x</span>
+                    </div>
+                </div>
+                );
+            })}
+            </div>
         </td>
-        <td className="hover:bg-gray-200 p-2 text-center cursor-default">
-          {order.status === "Not processed" && (
-            <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
-            </span>
-          )}
-          {order.status === "Processing" && (
-            <span className="block text-yellow-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
-            </span>
-          )}
-          {order.status === "Shipped" && (
-            <span className="block text-blue-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
-            </span>
-          )}
-          {order.status === "Delivered" && (
-            <span className="block text-green-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
-            </span>
-          )}
-          {order.status === "Cancelled" && (
-            <span className="block text-red-600 rounded-full text-center text-xs px-2 font-semibold">
-              {order.status}
-            </span>
-          )}
+        <td className="px-6 py-4 whitespace-nowrap text-center">
+          {getStatusBadge(order.status)}
         </td>
-        <td className="hover:bg-gray-200 p-2 text-center">
+        <td className="px-6 py-4 whitespace-nowrap text-center font-bold text-gray-900">
           ${order.amount}.00
         </td>
-        <td className="hover:bg-gray-200 p-2 text-center">{order.phone}</td>
-        <td className="hover:bg-gray-200 p-2 text-center">{order.address}</td>
-        <td className="hover:bg-gray-200 p-2 text-center">
+        <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600 font-medium">{order.phone}</td>
+        <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-600 font-medium max-w-xs truncate" title={order.address}>{order.address}</td>
+        <td className="px-6 py-4 whitespace-nowrap text-center text-xs font-mono text-gray-500 bg-gray-50 rounded p-1">
           {order.transactionId}
         </td>
-        <td className="hover:bg-gray-200 p-2 text-center">
-          {moment(order.createdAt).format("lll")}
+        <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+          {moment(order.createdAt).format("MMM Do YY")}
         </td>
-        <td className="hover:bg-gray-200 p-2 text-center">
-          {moment(order.updatedAt).format("lll")}
+        <td className="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">
+          {moment(order.updatedAt).format("MMM Do YY")}
         </td>
       </tr>
     </Fragment>
@@ -120,16 +118,19 @@ const OrdersComponent = () => {
   }
   return (
     <Fragment>
-      <div className="flex flex-col w-full my-4 md:my-0 md:w-9/12 md:px-8">
-        <div className="border">
-          <div className="py-4 px-4 text-lg font-semibold border-t-2 border-yellow-700">
-            Orders
+      <div className="flex flex-col w-full my-4 md:my-0 md:px-8">
+        <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden">
+          <div className="p-6 md:p-8 border-b border-gray-100 flex items-center justify-between">
+            <h2 className="text-2xl font-black text-gray-900 tracking-tight">Order History</h2>
+            <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-bold uppercase tracking-wide">
+                {orders ? orders.length : 0} Orders
+            </span>
           </div>
-          <hr />
-          <div className="overflow-auto bg-white shadow-lg p-4">
-            <table className="table-auto border w-full my-2">
+          
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
               <TableHeader />
-              <tbody>
+              <tbody className="bg-white divide-y divide-gray-200">
                 {orders && orders.length > 0 ? (
                   orders.map((item, i) => {
                     return <TableBody key={i} order={item} />;
@@ -138,17 +139,17 @@ const OrdersComponent = () => {
                   <tr>
                     <td
                       colSpan="8"
-                      className="text-xl text-center font-semibold py-8"
+                      className="text-center py-12"
                     >
-                      No order found
+                      <div className="flex flex-col items-center justify-center space-y-4">
+                          <svg className="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                          <span className="text-lg font-medium text-gray-500">No orders found</span>
+                      </div>
                     </td>
                   </tr>
                 )}
               </tbody>
             </table>
-            <div className="text-sm text-gray-600 mt-2">
-              Total {orders && orders.length} order found
-            </div>
           </div>
         </div>
       </div>
