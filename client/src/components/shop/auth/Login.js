@@ -35,9 +35,12 @@ const Login = (props) => {
       } else if (responseData.token) {
         setData({ email: "", password: "", loading: false, error: false });
         localStorage.setItem("jwt", JSON.stringify(responseData));
-       enqueueSnackbar('Login Completed Successfully..!', { variant: 'success' })
-        window.location.href = "/";
-
+        enqueueSnackbar('Login Completed Successfully..!', { variant: 'success' })
+        if (responseData.user.role === 1) {
+          window.location.href = "/admin/dashboard";
+        } else {
+          window.location.href = "/";
+        }
       }    
     } catch (error) {
       console.log(error);
